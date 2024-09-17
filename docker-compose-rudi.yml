@@ -1,0 +1,243 @@
+---
+name: rudi
+
+# Uncomment to add persistence between test run
+# volumes:
+#   postgresql_data:
+
+services:
+  database:
+    image: postgres:10.15
+    environment:
+      - POSTGRES_USER=rudi
+      - POSTGRES_PASSWORD=rudi
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    volumes:
+      - ./config/rudi-init/:/docker-entrypoint-initdb.d/
+      # Uncomment to add persistence between test run
+      # - postgresql_data:/var/lib/postgresql/data
+    profiles:
+      - portail
+
+  registry:
+    image: rudiplatform/rudi-microservice-registry:latest
+    hostname: registry.rudi.bzh
+    ports:
+      - 8761:8761
+    volumes:
+      - ./config/registry:/etc/rudi/config
+      - ./data/registry:/opt/rudi/data
+    environment:
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+      - XMX=256M
+    profiles:
+      - portail
+
+  gateway:
+    image: rudiplatform/rudi-microservice-gateway:latest
+    hostname: gateway.rudi.bzh
+    expose:
+      - 8080
+      - 8443
+    volumes:
+      - ./config/gateway:/etc/rudi/config/
+      - ./data/gateway:/opt/rudi/data/
+    environment:
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+      - XMX=512M
+    profiles:
+      - portail
+
+  acl:
+    image: rudiplatform/rudi-microservice-acl:latest
+    hostname: acl.rudi.bzh
+    expose:
+      - 8080
+      - 8443
+    depends_on:
+      database:
+        condition: service_healthy
+      gateway:
+        condition: service_started
+    volumes:
+      - ./config/acl:/etc/rudi/config/
+      - ./data/acl:/opt/rudi/data/
+    environment:
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+    profiles:
+      - portail
+
+  apigateway:
+    image: rudiplatform/rudi-microservice-apigateway:latest
+    hostname: apigateway.rudi.bzh
+    expose:
+      - 8080
+      - 8443
+    depends_on:
+      acl:
+        condition: service_started
+    volumes:
+      - ./config/apigateway:/etc/rudi/config/
+      - ./data/apigateway:/opt/rudi/data/
+    environment:
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+      - XMX=512M
+    profiles:
+      - portail
+
+  strukture:
+    image: rudiplatform/rudi-microservice-strukture:latest
+    hostname: strukture.rudi.bzh
+    expose:
+      - 8080
+      - 8443
+    depends_on:
+      acl:
+        condition: service_started
+    volumes:
+      - ./config/strukture:/etc/rudi/config/
+      - ./data/strukture:/opt/rudi/data/
+    environment:
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+    profiles:
+      - portail
+
+  kalim:
+    image: rudiplatform/rudi-microservice-kalim:latest
+    hostname: kalim.rudi.bzh
+    expose:
+      - 8080
+      - 8443
+    depends_on:
+      acl:
+        condition: service_started
+    volumes:
+      - ./config/kalim:/etc/rudi/config/
+      - ./data/kalim:/opt/rudi/data/
+    environment:
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+    profiles:
+      - portail
+
+
+  konsult:
+    image: rudiplatform/rudi-microservice-konsult:latest
+    hostname: konsult.rudi.bzh
+    expose:
+      - 8080
+      - 8443
+    depends_on:
+      acl:
+        condition: service_started
+    volumes:
+      - ./config/konsult:/etc/rudi/config/
+      - ./data/konsult:/opt/rudi/data/
+      - /var/log/rudi/konsult:/var/log/rudi/konsult
+    environment:
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+    profiles:
+      - portail
+
+  kos:
+    image: rudiplatform/rudi-microservice-kos:latest
+    hostname: kos.rudi.bzh
+    expose:
+      - 8080
+      - 8443
+    depends_on:
+      acl:
+        condition: service_started
+    volumes:
+      - ./config/kos:/etc/rudi/config
+      - ./data/kos:/opt/rudi/data
+    environment:
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+    profiles:
+      - portail
+
+  projekt:
+    image: rudiplatform/rudi-microservice-projekt:latest
+    hostname: projekt.rudi.bzh
+    expose:
+      - 8080
+      - 8443
+    depends_on:
+      acl:
+        condition: service_started
+    volumes:
+      - ./config/projekt:/etc/rudi/config/
+      - ./data/projekt:/opt/rudi/data/
+      - /var/log/rudi/projekt:/var/log/rudi/projekt
+    environment:
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+    profiles:
+      - portail
+
+  selfdata:
+    image: rudiplatform/rudi-microservice-selfdata:latest
+    hostname: selfdata.rudi.bzh
+    expose:
+      - 8080
+      - 8443
+    depends_on:
+      acl:
+        condition: service_started
+    volumes:
+      - ./config/selfdata:/etc/rudi/config/
+      - ./data/selfdata:/opt/rudi/data/
+    environment:
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+    profiles:
+      - portail
+
+  konsent:
+    image: rudiplatform/rudi-microservice-konsent:latest
+    hostname: konsent.rudi.bzh
+    expose:
+      - 8080
+      - 8443
+    depends_on:
+      acl:
+        condition: service_started
+    volumes:
+      - ./config/konsent:/etc/rudi/config
+      - ./data/konsent:/opt/rudi/data
+    environment:
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+      - XMX=2G
+    profiles:
+      - portail
+
+  mailhog:
+    image: mailhog/mailhog
+    restart: always
+    environment:
+      MH_AUTH_FILE: /mailhog.auth
+      MH_STORAGE: maildir
+    volumes:
+      - ./config/mailhog/auth.txt:/mailhog.auth
+    profiles:
+      - portail
+
+  portail:
+    ports:
+      - 8088:8080
+    build: image/rudi-portail
+    depends_on:
+      - gateway
+      - strukture
+      - acl
+      - konsult
+      - kalim
+      - kos
+      - konsent
+      - projekt
+      - selfdata
+    profiles:
+      - portail
+    

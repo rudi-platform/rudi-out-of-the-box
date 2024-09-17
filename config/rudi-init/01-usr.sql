@@ -1,0 +1,142 @@
+
+CREATE USER acl WITH
+  LOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION;
+
+ALTER USER acl SET search_path TO acl_data, public;
+ALTER USER acl WITH PASSWORD 'acl';
+
+CREATE USER acl2 WITH
+  LOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION;
+
+ALTER USER acl2 SET search_path TO acl_data, public;
+ALTER USER acl2 WITH PASSWORD 'acl2';
+
+CREATE USER kalim WITH
+  LOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION;
+
+ALTER USER kalim SET search_path TO kalim_data, public;
+ALTER USER kalim WITH PASSWORD 'kalim';
+
+CREATE USER konsent WITH
+  LOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION;
+
+ALTER USER konsent SET search_path TO konsent_data, public;
+ALTER USER konsent WITH PASSWORD 'konsent';
+
+CREATE USER konsult WITH
+  LOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION;
+
+ALTER USER konsult SET search_path TO konsult_data, public;
+ALTER USER konsult WITH PASSWORD 'konsult';
+
+CREATE USER kos WITH
+  LOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION;
+
+ALTER USER kos SET search_path TO kos_data, public;
+ALTER USER kos WITH PASSWORD 'kos';
+
+CREATE USER project WITH
+  LOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION;
+
+ALTER USER project SET search_path TO project_data, public;
+ALTER USER project WITH PASSWORD 'project';
+
+CREATE USER selfdata WITH
+  LOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION;
+
+ALTER USER selfdata SET search_path TO selfdata_data, public;
+ALTER USER selfdata WITH PASSWORD 'selfdata';
+
+CREATE USER strukture WITH
+  LOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION;
+
+ALTER USER strukture SET search_path TO strukture_data, public;
+ALTER USER strukture WITH PASSWORD 'strukture';
+
+CREATE USER template WITH
+  LOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION;
+
+ALTER USER template SET search_path TO template_data, public;
+ALTER USER template WITH PASSWORD 'template';
+CREATE USER apigateway WITH
+  LOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION;
+
+ALTER USER apigateway SET search_path TO apigateway_data, public;
+ALTER USER apigateway WITH PASSWORD 'apigateway';
+
+CREATE USER consent WITH
+  LOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION;
+
+ALTER USER consent SET search_path TO consent_data, public;
+ALTER USER consent WITH PASSWORD 'consent';
+
+CREATE USER projekt WITH
+  LOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION;
+
+ALTER USER projekt SET search_path TO projekt_data, public;
+ALTER USER projekt WITH PASSWORD 'projekt';
