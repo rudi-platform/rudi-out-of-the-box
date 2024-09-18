@@ -1,7 +1,7 @@
 FROM ekoindarto/solr-cvm
 USER root
 
-COPY entrypoint.sh /tmp/entrypoint.sh
+COPY entrypoint.sh /rudi-entrypoint.sh
 
 # Owner
 RUN chown -R solr:solr /tmp \
@@ -25,4 +25,4 @@ RUN rm /opt/solr-8.5.2/contrib/prometheus-exporter/lib/log4j-*-2.11.2.jar \
 
 # Ready !
 USER solr
-CMD ["/tmp/entrypoint.sh"]
+CMD ["/rudi-entrypoint.sh"]
