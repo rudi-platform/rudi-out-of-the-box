@@ -7,16 +7,17 @@ name: rudi
 
 services:
   database:
-    image: postgres:10.15
+    image: postgres:15.8
     environment:
       - POSTGRES_USER=rudi
       - POSTGRES_PASSWORD=rudi
+      - POSTGRES_DB=rudi
     healthcheck:
-      test: ["CMD", "pg_isready"]
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB -h database"]
       interval: 30s
       timeout: 30s
       retries: 5
-      start_period: 30s
+      start_period: 500s
     volumes:
       - ./config/rudi-init/:/docker-entrypoint-initdb.d/
       # Uncomment to add persistence between test run

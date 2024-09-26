@@ -37,7 +37,7 @@ Consultez et modifiez les variables d'environnement si nécessaire dans le fichi
 
 Pour démarrer les services définis dans les `docker-compose.yml`, exécutez :
 '''
-docker compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml up -d
+docker compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" up -d
 '''
 
 Cette commande démarrera les conteneurs en arrière-plan.
@@ -47,12 +47,12 @@ Une fois les conteneurs en cours d'exécution, accédez à l'application sur [ht
 #### Arrêter les services
 Pour arrêter les services, exécutez :
 '''
-docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml  down
+docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*"  down
 '''
 
 #### Recréer les conteneurs (si nécessaire)
 '''
-docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml up --build
+docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" up --build
 '''
 
 ## Structure du projet

@@ -10,8 +10,7 @@ name: rudi
 
 services:
   postgres:
-    image: dataverse-postgres
-    build: ./image/dataverse-postgres
+    image: postgres:15.8
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "pg_isready"]
@@ -60,7 +59,7 @@ services:
       - 4848:4848
     environment:
       - "CVM_SERVER_NAME=CESSDA" #Optional
-      - "CVM_SERVER_URL=https://${traefikhost}/"
+      - "CVM_SERVER_URL=https://magnolia.${base_dn}/"
       - "CVM_TSV_SOURCE=https://github.com/IQSS/dataverse-docker/releases/download/5.3-cv/cvocdemo.tsv"
       - "LANG=en"
       - "cvManager=http://"
