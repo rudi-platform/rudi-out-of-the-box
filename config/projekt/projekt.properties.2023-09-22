@@ -1,0 +1,73 @@
+server.port=8443
+
+server.ssl.enabled=true
+server.ssl.key-store=file:/etc/rudi/config/rudi-https-certificate.jks
+server.ssl.key-store-password=rudissl
+server.ssl.key-store-type=PKCS12
+server.ssl.key-alias=rudi-https
+server.ssl.key-password=rudissl
+#trust.store=${server.ssl.key-store}
+#trust.store.password=${server.ssl.key-store-password}
+trust.trust-all-certs=true
+
+# Configuration BDD
+spring.datasource.url=jdbc:postgresql://database:5432/rudi
+spring.datasource.username=projekt
+spring.datasource.password=projekt
+spring.jpa.show-sql=true
+
+# Obligatoire en prod pour retrouver les tables créées par rudi-facet-bpmn
+spring.jpa.properties.hibernate.default_schema=projekt_data
+
+spring.flyway.enabled=true
+spring.jpa.hibernate.ddl-auto=none
+
+# Eureka
+eureka.client.serviceURL.defaultZone=https://admin:4dM1nApp!@registry:8761/eureka
+eureka.client.register-with-eureka=true
+eureka.client.fetch-registry=true
+
+eureka.instance.instance-id=${spring.application.name}:${random.uuid}
+eureka.instance.hostname=localhost
+eureka.instance.prefer-ip-address=true
+eureka.instance.nonSecurePortEnabled=false
+eureka.instance.securePortEnabled=true
+
+eureka.client.tls.enabled=${server.ssl.enabled}
+eureka.client.tls.key-store=${server.ssl.key-store}
+eureka.client.tls.key-store-type=${server.ssl.key-store-type}
+eureka.client.tls.key-password=${server.ssl.key-password}
+eureka.client.tls.key-store-password=${server.ssl.key-store-password}
+eureka.client.tls.trust-store=${eureka.client.tls.key-store}
+eureka.client.tls.trust-store-password=${eureka.client.tls.key-password}
+eureka.client.tls.trust-store-type=${server.ssl.key-store-type}
+
+security.jwt.access.tokenKey=file:/etc/rudi/config/key/id_rsa
+
+# Rudi OAuth2
+module.oauth2.trust-all-certs=true
+module.oauth2.provider-uri=https://acl/oauth/token
+module.oauth2.check-token-uri=https://acl/oauth/check_token
+module.oauth2.client-id=projekt
+module.oauth2.client-secret=rudi@123
+module.oauth2.scope=read,write
+
+dataverse.api.url=http://dataverse:8080/api
+dataverse.api.token=a785a463-2518-4c7c-be56-c44d1f04ae8c
+dataverse.api.rudi.media.data.alias=rudi_media_data
+dataverse.api.rudi.data.alias=rudi_data
+dataverse.api.rudi.archive.alias=rudi_archive
+
+freemarker.baseDirectory=/etc/rudi/config/projekt
+
+mail.smtp.host=mailhog
+mail.smtp.port=1025
+mail.smtp.auth=false
+mail.smtp.starttls.enable=false
+mail.from=nepasrepondre@rudi.localhost
+
+email.urlServer=https://rudi-qualif.open-groupe.com
+
+# Delai de lancement entre 2 tâches de clean des linked datasets expirés et nombre de tentative de suppression pour chaque link expiré
+rudi.projekt.scheduler.linkedDatasetExpirationCleaner.delay=0 1 1 * * *
+rudi.projekt.tentativeMaxSuppression.linkedDatasetExpired=3

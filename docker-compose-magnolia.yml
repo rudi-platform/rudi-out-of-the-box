@@ -1,0 +1,47 @@
+---
+name: rudi
+
+services:
+  magnolia-database:
+    image: postgres:15.8
+    expose:
+      - 5432
+    #image: glregistry.boost.open.global/rennes-metropole/rudi/rudi/magnolia-postgres:rudi-4307-cms
+    environment:
+      - "POSTGRES_DB=magnolia"
+      - "POSTGRES_USER=magnolia"
+      - "POSTGRES_PASSWORD=magnolia"
+      - "POSTGRES_PORT=5432"
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    volumes:
+      - ./config/magnolia-data/:/docker-entrypoint-initdb.d/
+    #  - postgresql_data:/var/lib/postgresql/data
+    profiles:
+      - magnolia
+
+  magnolia:
+    build: ./image/magnolia
+    #image: glregistry.boost.open.global/rennes-metropole/rudi/rudi/magnolia:rudi-4307-cms
+    security_opt:
+      - seccomp=unconfined
+    depends_on:
+      - magnolia-database
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config/magnolia:/usr/local/tomcat/webapps/ROOT/WEB-INF/config
+      - ./data/magnolia/modules:/opt/magnolia/modules
+      - ./data/magnolia/repository:/opt/magnolia/data/repository
+    environment:
+      - "MAGNOLIA_BDD_HOST=magnolia-database"
+      - "MAGNOLIA_BDD_USER=magnolia"
+      - "MAGNOLIA_BDD_PASSWORD=magnolia" #NE PAS UTILISER DANS DES CONDITIONS DE PRODUCTIONS POUR DES RAISONS EVIDENTES
+      - "MAGNOLIA_REPOSITORY_ROOT=/opt/magnolia/data"
+      - "CATALINA_OPTS=-DMAGNOLIA_REPOSITORY_ROOT=\"/opt/magnolia/data\"  -DMAGNOLIA_BDD_HOST=magnolia-database -DMAGNOLIA_BDD_USER=magnolia -DMAGNOLIA_BDD_PASSWORD=magnolia -Xmx2048m -Dmagnolia.update.auto=true"
+    profiles:
+      - magnolia

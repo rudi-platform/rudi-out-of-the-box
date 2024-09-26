@@ -1,0 +1,95 @@
+
+
+
+---
+name: rudi
+
+# Uncomment to add persistence between test run
+# volumes:
+#   database-data:
+
+services:
+  postgres:
+    image: postgres:15.8
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    environment:
+      - "LC_ALL=C.UTF-8"
+      - "POSTGRES_DB=dataverse"
+      - "POSTGRES_USER=dataverse"
+      - "POSTGRES_PASSWORD=dataverse_db_password"
+      - "POSTGRES_PORT=5432"
+    env_file:
+      - data/dataverse/.env
+    volumes:
+      - ./config/dataverse/dataverse-init/:/docker-entrypoint-initdb.d/
+    # Uncomment to add persistence between test run
+    #  - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+    profiles:
+      - dataverse
+
+  solr:
+    image: dataverse-solr
+    build: ./image/dataverse-solr
+    privileged: true
+    environment:
+      - "DATAVERSE_HOST=dataverse"
+      - "SOLR_HOST=solr"
+      - "SOLR_JAVA_MEM=-Xms1g -Xmx1g"
+    env_file:
+      - data/dataverse/.env
+    volumes:
+      - ./data/solr/solr-data:/var/solr/data
+    profiles:
+      - dataverse
+
+  dataverse:
+    image: dataverse-engine
+    build: ./image/dataverse-engine
+    privileged: true
+    user:
+      "root"
+    ports:
+      - 8081:8080
+      - 4848:4848
+    environment:
+      - "CVM_SERVER_NAME=CESSDA" #Optional
+      - "CVM_SERVER_URL=https://magnolia.${base_dn}/"
+      - "CVM_TSV_SOURCE=https://github.com/IQSS/dataverse-docker/releases/download/5.3-cv/cvocdemo.tsv"
+      - "LANG=en"
+      - "cvManager=http://"
+      - "BUNDLEPROPERTIES=Bundle.properties"
+      - "ADMIN_EMAIL=admin@localhost"
+      - "MAIL_SERVER=mailrelay"
+      - "SOLR_LOCATION=solr:8983"
+      - "RSERVE_HOST=localhost"
+      - "RSERVE_PORT=6311"
+      - "RSERVE_USER=rserve"
+      - "RSERVE_PASSWORD=rserve"
+      - "DATAVERSE_DB_HOST=postgres"
+      - "DATAVERSE_DB_PORT=5432"
+      - "DATAVERSE_DB_USER=dataverse"
+      - "DATAVERSE_DB_PASSWORD=dataverse_db_password"
+      - "DATAVERSE_DB_NAME=dataverse"
+      - "DATAVERSE_SERVICE_HOST"
+      - "DATAVERSE_URL"
+      - "SOLR_SERVICE_HOST=solr"
+      - "SOLR_SERVICE_PORT=8983"
+      - "GLASSFISH_DOMAIN=domain1"
+    env_file:
+      - data/solr/.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      solr:
+        condition: service_started
+    volumes:
+      - ./data/dataverse/dataverse-files:/data
+    profiles:
+      - dataverse
+

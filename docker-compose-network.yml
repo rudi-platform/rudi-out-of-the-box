@@ -1,0 +1,121 @@
+---
+name: rudi
+
+services:
+  reverse-proxy:
+    # The official v2 Traefik docker image
+    image: traefik:v2.2
+    # Enables the web UI and tells Traefik to listen to docker
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=traefik"
+      - "--serversTransport.insecureSkipVerify=true"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+
+  #Label pour dataverse
+  solr:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.solr.rule=Host(`solr.${base_dn}`)"
+      - "traefik.http.services.solr.loadbalancer.server.port=8983"
+
+  dataverse:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dataverse.rule=Host(`dataverse.${base_dn}`)"
+      - "traefik.http.services.dataverse.loadbalancer.server.port=8080"
+
+  #label pour magnolia
+  magnolia:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.magnolia.rule=Host(`magnolia.${base_dn}`)"
+      - "traefik.http.services.magnolia.loadbalancer.server.port=8080"
+
+  #label pour portail
+  gateway:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.gateway.loadbalancer.server.scheme=https"
+      - "traefik.http.services.gateway.loadbalancer.server.port=8443"
+      - "traefik.http.routers.gateway.rule=Host(`rudi.${base_dn}`) && PathPrefix(`/gateway`)"
+
+  apigateway:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.apigateway.loadbalancer.server.scheme=https"
+      - "traefik.http.services.apigateway.loadbalancer.server.port=8443"
+      - "traefik.http.middlewares.apigateway-rewritepath.replacepathregex.regex=^/medias/(.*)"
+      - "traefik.http.middlewares.apigateway-rewritepath.replacepathregex.replacement=/apigateway/datasets/$$1"
+      - "traefik.http.routers.apigateway.middlewares=apigateway-rewritepath"
+      - "traefik.http.routers.apigateway.rule=Host(`rudi.${base_dn}`) && ( PathPrefix(`/apigateway`) || PathPrefix(`/medias`))"
+
+  strukture:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.strukture.loadbalancer.server.scheme=https"
+      - "traefik.http.services.strukture.loadbalancer.server.port=8443"
+      - "traefik.http.routers.strukture.rule=Host(`rudi.${base_dn}`) && PathPrefix(`/strukture`)"
+
+  acl:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.acl.loadbalancer.server.scheme=https"
+      - "traefik.http.services.acl.loadbalancer.server.port=8443"
+      - "traefik.http.routers.acl.rule=Host(`rudi.${base_dn}`) && ( PathPrefix(`/acl`) || PathPrefix(`/anonymous`) || PathPrefix(`/authenticate`) || PathPrefix(`/refresh_token`) || PathPrefix(`/check_credential`) || PathPrefix(`/oauth`))"
+
+  konsult:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.konsult.loadbalancer.server.scheme=https"
+      - "traefik.http.services.konsult.loadbalancer.server.port=8443"
+      - "traefik.http.routers.konsult.rule=Host(`rudi.${base_dn}`) && PathPrefix(`/konsult`)"
+
+  kalim:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.kalim.loadbalancer.server.scheme=https"
+      - "traefik.http.services.kalim.loadbalancer.server.port=8443"
+      - "traefik.http.routers.kalim.rule=Host(`rudi.${base_dn}`) && PathPrefix(`/kalim`)"
+
+  kos:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.kos.loadbalancer.server.scheme=https"
+      - "traefik.http.services.kos.loadbalancer.server.port=8443"
+      - "traefik.http.routers.kos.rule=Host(`rudi.${base_dn}`) && PathPrefix(`/kos`)"
+
+  konsent:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.konsent.loadbalancer.server.scheme=https"
+      - "traefik.http.services.konsent.loadbalancer.server.port=8443"
+      - "traefik.http.routers.konsent.rule=Host(`rudi.${base_dn}`) && PathPrefix(`/konsent`)"
+
+  projekt:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.projekt.loadbalancer.server.scheme=https"
+      - "traefik.http.services.projekt.loadbalancer.server.port=8443"
+      - "traefik.http.routers.projekt.rule=Host(`rudi.${base_dn}`) && PathPrefix(`/projekt`)"
+
+  selfdata:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.selfdata.loadbalancer.server.scheme=https"
+      - "traefik.http.services.selfdata.loadbalancer.server.port=8443"
+      - "traefik.http.routers.selfdata.rule=Host(`rudi.${base_dn}`) && PathPrefix(`/selfdata`)"
+
+  portail:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.portail.loadbalancer.server.scheme=http"
+      - "traefik.http.services.portail.loadbalancer.server.port=8080"
+      - "traefik.http.routers.portail.rule=Host(`rudi.${base_dn}`)"
