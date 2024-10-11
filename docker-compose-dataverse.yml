@@ -2,7 +2,7 @@
 
 
 ---
-name: rudi
+name: rudiplatform
 
 # Uncomment to add persistence between test run
 # volumes:
@@ -34,7 +34,7 @@ services:
       - dataverse
 
   solr:
-    image: dataverse-solr
+    image: rudiplatform/dataverse-solr
     build: ./image/dataverse-solr
     privileged: true
     environment:
@@ -49,7 +49,7 @@ services:
       - dataverse
 
   dataverse:
-    image: dataverse-engine
+    image: rudiplatform/dataverse-engine
     build: ./image/dataverse-engine
     privileged: true
     user:

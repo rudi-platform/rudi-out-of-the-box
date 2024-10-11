@@ -1,5 +1,5 @@
 ---
-name: rudi
+name: rudiplatform
 
 services:
   magnolia-database:
@@ -26,7 +26,7 @@ services:
 
   magnolia:
     build: ./image/magnolia
-    #image: glregistry.boost.open.global/rennes-metropole/rudi/rudi/magnolia:rudi-4307-cms
+    image: rudiplatform/magnolia
     security_opt:
       - seccomp=unconfined
     depends_on:

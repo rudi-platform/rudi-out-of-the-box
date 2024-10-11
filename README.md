@@ -72,12 +72,12 @@ docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f 
 
 Voici un aperçu de la structure des fichiers du projet :
 
-'''
+```
 ├── config/ : contient les données de configuration et d'initialisation __en lecture seul__ des différents containers.
 ├── data/ : Donnée en lecture écriture nécessaire au bon fonctionnement. A terme, devrait contenir seulement une strucutre de dossier vide.
 ├── image/ : Donnée pour construire certaine image "à la volée" depuis des images publiques.
 └── .env                  # Exemple de fichier d'environnement
-'''
+```
 
 ## Tests
 

@@ -1,5 +1,5 @@
 ---
-name: rudi
+name: rudiplatform
 
 # Uncomment to add persistence between test run
 # volumes:
@@ -228,7 +228,7 @@ services:
   portail:
     ports:
       - 8088:8080
-    build: image/rudi-portail
+    image: rudiplatform/rudi-application-front-office:latest
     depends_on:
       - gateway
       - strukture
