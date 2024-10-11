@@ -1,6 +1,6 @@
 # **rudi-plateform/rudi-oob**
 
-Bienvenue dans le projet **rudi-plateform/rudi-oob** ! Ceci est une version de lancement rapide pour tester et adopter [rudi-portal](https://github.com/rudi-platform/rudi-portal) dans un environnement local. Cette implémentation __NE DOIT PAS__ être utilisé en production. 
+Bienvenue dans le projet **rudi-plateform/rudi-oob** ! Ceci est une version de lancement rapide pour tester et adopter [rudi-portal](https://github.com/rudi-platform/rudi-portal) dans un environnement local. Cette implémentation __NE DOIT PAS__ être utilisé en l'état en production (Il convient de changer et adapter la configuration notamment les mots de passe). 
 
 ## Table des matières
 2. [Prérequis](#prérequis)
@@ -18,16 +18,20 @@ Bienvenue dans le projet **rudi-plateform/rudi-oob** ! Ceci est une version de l
 Avant de commencer, assurez-vous d'avoir installé les éléments suivants sur votre machine :
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
+- [Git LFS](https://git-lfs.com/)
+
 
 ## Utilisation
 
 ### Récupération des sources
 
 Clonez ce dépôt et accédez au répertoire du projet :
-'''
+
+```
 git clone https://github.com/rudi-plateform/rudi-oob.git
 cd rudi-oob
-'''
+git lfs pull
+```
 
 #### 1. Renseignez le fichier `.env`
 
@@ -36,9 +40,10 @@ Consultez et modifiez les variables d'environnement si nécessaire dans le fichi
 #### 2. Lancer les services Docker
 
 Pour démarrer les services définis dans les `docker-compose.yml`, exécutez :
-'''
+
+```
 docker compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" up -d
-'''
+```
 
 Cette commande démarrera les conteneurs en arrière-plan.
 
@@ -46,14 +51,22 @@ Une fois les conteneurs en cours d'exécution, accédez à l'application sur [ht
 
 #### Arrêter les services
 Pour arrêter les services, exécutez :
-'''
+
+```
 docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*"  down
-'''
+```
 
 #### Recréer les conteneurs (si nécessaire)
-'''
+
+```
 docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" up --build
-'''
+```
+
+#### Construire uniquement les images
+
+```
+docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" build
+```
 
 ## Structure du projet
 
