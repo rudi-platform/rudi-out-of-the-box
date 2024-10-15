@@ -1,6 +1,6 @@
 # **rudi-plateform/rudi-oob**
 
-Bienvenue dans le projet **rudi-plateform/rudi-oob** ! Ceci est une version de lancement rapide pour tester et adopter [rudi-portal](https://github.com/rudi-platform/rudi-portal) dans un environnement local. Cette implémentation __NE DOIT PAS__ être utilisé en production. 
+Bienvenue dans le projet **rudi-plateform/rudi-oob** ! Ceci est une version de lancement rapide pour tester et adopter [rudi-portal](https://github.com/rudi-platform/rudi-portal) dans un environnement local. Cette implémentation __NE DOIT PAS__ être utilisé en l'état en production (Il convient de changer et adapter la configuration notamment les mots de passe). 
 
 ## Table des matières
 2. [Prérequis](#prérequis)
@@ -18,20 +18,33 @@ Bienvenue dans le projet **rudi-plateform/rudi-oob** ! Ceci est une version de l
 Avant de commencer, assurez-vous d'avoir installé les éléments suivants sur votre machine :
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
+- [Git LFS](https://git-lfs.com/)
+
 
 ## Utilisation
 
 ### Récupération des sources
 
 Clonez ce dépôt et accédez au répertoire du projet :
+
 ```
 git clone https://github.com/rudi-plateform/rudi-oob.git
 cd rudi-oob
+git lfs pull
 ```
 
 #### 1. Renseignez le fichier `.env`
 
 Consultez et modifiez les variables d'environnement si nécessaire dans le fichier `.env`.
+
+**Focus :**
+La variable *base_dn* permet de préciser le nom du serveur Rudi.
+La valeur par défaut est *localhost* mais il est possible d'indiquer un nom de machine ou un nom de domaine.
+Si l'on précise un nom de machine, il est souvent nécessaire de déclarer dans votre fichier "hosts" windows quelque chose de la forme:
+
+```
+adresse_ip dataverse.nom_de_domaine magnolia.nom_de_domaine rudi.nom_de_domaine
+```
 
 #### 2. Lancer les services Docker
 
@@ -45,6 +58,13 @@ Cette commande démarrera les conteneurs en arrière-plan.
 
 Une fois les conteneurs en cours d'exécution, accédez à l'application sur [http://rudi.localhost/](http://rudi.localhost/) (peux varier en fonction de ce que contient le fichier `.env`).
 
+Il est possible d'accéder :
+
+- Au catalogue **Dataverse** sur *http://dataverse.<nom_de_domaine>*
+- Au CMS Headless **Magnolia** sur *http://magnolia.<nom_de_domaine>*
+- Aux services sur *http://rudi.<nom_de_domaine>/<nom_du_service>*
+
+
 #### Arrêter les services
 
 Pour arrêter les services, exécutez :
@@ -57,6 +77,12 @@ docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f 
 
 ```
 docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" up --build
+```
+
+#### Construire uniquement les images
+
+```
+docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" build
 ```
 
 ## Structure du projet

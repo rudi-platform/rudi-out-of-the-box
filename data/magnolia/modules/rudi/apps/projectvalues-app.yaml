@@ -1,0 +1,42 @@
+!content-type:projectvalue
+name: projectvalues-app
+icon: icon-content-app
+permissions:
+  roles:
+    editors: projectvalues_editor
+    publishers: projectvalues_editor
+subApps:
+  detail:
+    form:
+      properties:
+        shorttitle:
+          field:
+            properties:
+              locale:
+                required: true
+              message:
+                maxLength: 256
+                required: true
+        title:
+          field:
+            properties:
+              locale:
+                required: true
+              message:
+                maxLength: 256
+                required: true
+        body:
+          field:
+            properties:
+              locale:
+                required: true
+              message:
+                $type: richTextField
+                required: true
+                height: 700
+                images: true
+                tables: true
+                alignment: true
+                source: true
+                lists: true
+                configJsFile: /.resources/rudi/webresources/ckeditor/config-magnolia-extended.js    

@@ -1,0 +1,12 @@
+templateScript: /rudi/templates/components/term/termOne.ftl
+renderType: freemarker
+
+areas:
+  termOne:
+    availableComponents:
+      termTitle:
+        id: rudi:components/term/termTitle
+      termDetail:
+        id: rudi:components/term/termDetail
+      termSimple:
+        id: rudi:components/term/termSimple 
