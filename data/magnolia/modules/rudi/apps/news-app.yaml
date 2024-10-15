@@ -1,0 +1,74 @@
+!content-type:news
+name: news-app
+icon: icon-content-app
+permissions:
+  roles:
+    editors: news_editor
+    publishers: news_editor
+subApps:
+  detail:
+    form:
+      properties:
+        link:
+          field:
+            properties:
+              locale:
+                required: true
+              message:
+                maxLength: 256        
+                required: true
+        modified:
+          field:
+            properties:
+              locale:
+                required: true
+              message:
+                maxLength: 256
+                required: true
+        title1:
+          field:
+            properties:
+              locale:
+                required: true
+              message:
+                maxLength: 256
+                required: true
+        title2:
+          field:
+            properties:
+              locale:
+                required: true
+              message:
+                maxLength: 256
+                required: true
+        sumup:
+          field:
+            properties:
+              locale:
+                required: true
+              message:
+                required: true
+                $type: richTextField
+                height: 700
+                images: true
+                tables: true
+                alignment: true
+                source: true
+                lists: true
+                configJsFile: /.resources/rudi/webresources/ckeditor/config-magnolia-extended.js    
+        body:
+          field:
+            properties:
+              locale:
+                required: true
+              message:
+                $type: richTextField
+                required: true
+                height: 700
+                images: true
+                tables: true
+                alignment: true
+                source: true
+                lists: true
+                configJsFile: /.resources/rudi/webresources/ckeditor/config-magnolia-extended.js    
+

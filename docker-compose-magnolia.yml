@@ -1,13 +1,14 @@
 ---
-name: rudi
+name: rudiplatform
 
 services:
   magnolia-database:
     image: postgres:15.8
-    expose:
-      - 5432
-    #image: glregistry.boost.open.global/rennes-metropole/rudi/rudi/magnolia-postgres:rudi-4307-cms
+    restart: unless-stopped
+    ports:
+      - 35434:5432
     environment:
+      - "LC_ALL=C.UTF-8"
       - "POSTGRES_DB=magnolia"
       - "POSTGRES_USER=magnolia"
       - "POSTGRES_PASSWORD=magnolia"
@@ -19,20 +20,20 @@ services:
       retries: 5
       start_period: 30s
     volumes:
-      - ./config/magnolia-data/:/docker-entrypoint-initdb.d/
+      - ./config/magnolia-init/:/docker-entrypoint-initdb.d/
     #  - postgresql_data:/var/lib/postgresql/data
     profiles:
       - magnolia
 
   magnolia:
     build: ./image/magnolia
-    #image: glregistry.boost.open.global/rennes-metropole/rudi/rudi/magnolia:rudi-4307-cms
+    image: rudiplatform/magnolia
     security_opt:
       - seccomp=unconfined
     depends_on:
       - magnolia-database
     ports:
-      - "8080:8080"
+      - "8082:8080"
     volumes:
       - ./config/magnolia:/usr/local/tomcat/webapps/ROOT/WEB-INF/config
       - ./data/magnolia/modules:/opt/magnolia/modules

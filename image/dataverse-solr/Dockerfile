@@ -5,7 +5,8 @@ COPY entrypoint.sh /rudi-entrypoint.sh
 
 # Owner
 RUN chown -R solr:solr /tmp \
-    && chmod a+x /tmp/entrypoint.sh
+    && chmod a+rx /rudi-entrypoint.sh \
+    && chmod a+rx /tmp/entrypoint.sh
 
 ADD log4j-1.2-api-2.17.0.jar /opt/solr-8.5.2/server/lib/ext/
 ADD log4j-core-2.17.0.jar /opt/solr-8.5.2/server/lib/ext/

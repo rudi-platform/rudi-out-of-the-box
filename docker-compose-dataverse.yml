@@ -1,17 +1,16 @@
-
-
-
 ---
-name: rudi
+name: rudiplatform
 
 # Uncomment to add persistence between test run
 # volumes:
 #   database-data:
 
 services:
-  postgres:
+  dataverse-database:
     image: postgres:15.8
     restart: unless-stopped
+    ports:
+      - 35433:5432
     healthcheck:
       test: ["CMD", "pg_isready"]
       interval: 30s
@@ -24,32 +23,28 @@ services:
       - "POSTGRES_USER=dataverse"
       - "POSTGRES_PASSWORD=dataverse_db_password"
       - "POSTGRES_PORT=5432"
-    env_file:
-      - data/dataverse/.env
     volumes:
-      - ./config/dataverse/dataverse-init/:/docker-entrypoint-initdb.d/
+      - ./config/dataverse-init/:/docker-entrypoint-initdb.d/
     # Uncomment to add persistence between test run
     #  - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
     profiles:
       - dataverse
 
   solr:
-    image: dataverse-solr
+    image: rudiplatform/dataverse-solr
     build: ./image/dataverse-solr
     privileged: true
     environment:
       - "DATAVERSE_HOST=dataverse"
       - "SOLR_HOST=solr"
       - "SOLR_JAVA_MEM=-Xms1g -Xmx1g"
-    env_file:
-      - data/dataverse/.env
     volumes:
       - ./data/solr/solr-data:/var/solr/data
     profiles:
       - dataverse
 
   dataverse:
-    image: dataverse-engine
+    image: rudiplatform/dataverse-engine
     build: ./image/dataverse-engine
     privileged: true
     user:
@@ -71,7 +66,7 @@ services:
       - "RSERVE_PORT=6311"
       - "RSERVE_USER=rserve"
       - "RSERVE_PASSWORD=rserve"
-      - "DATAVERSE_DB_HOST=postgres"
+      - "DATAVERSE_DB_HOST=dataverse-database"
       - "DATAVERSE_DB_PORT=5432"
       - "DATAVERSE_DB_USER=dataverse"
       - "DATAVERSE_DB_PASSWORD=dataverse_db_password"
@@ -81,10 +76,8 @@ services:
       - "SOLR_SERVICE_HOST=solr"
       - "SOLR_SERVICE_PORT=8983"
       - "GLASSFISH_DOMAIN=domain1"
-    env_file:
-      - data/solr/.env
     depends_on:
-      postgres:
+      dataverse-database:
         condition: service_healthy
       solr:
         condition: service_started

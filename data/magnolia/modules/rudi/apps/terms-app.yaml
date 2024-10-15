@@ -1,0 +1,42 @@
+!content-type:term
+name: terms-app
+icon: icon-content-app
+permissions:
+  roles:
+    editors: terms_editor
+    publishers: terms_editor
+subApps:
+  detail:
+    form:
+      properties:
+        link:
+          field:
+            properties:
+              locale:
+                required: true
+              message:
+                maxLength: 256        
+                required: true
+        title:
+          field:
+            properties:
+              locale:
+                required: true
+              message:
+                maxLength: 256
+                required: true
+        body:
+          field:
+            properties:
+              locale:
+                required: true
+              message:
+                $type: richTextField
+                required: true
+                height: 700
+                images: true
+                tables: true
+                alignment: true
+                source: true
+                lists: true
+                configJsFile: /.resources/rudi/webresources/ckeditor/config-magnolia-extended.js    
