@@ -37,6 +37,15 @@ git lfs pull
 
 Consultez et modifiez les variables d'environnement si nécessaire dans le fichier `.env`.
 
+**Focus :**
+La variable *base_dn* permet de préciser le nom du serveur Rudi.
+La valeur par défaut est *localhost* mais il est possible d'indiquer un nom de machine ou un nom de domaine.
+Si l'on précise un nom de machine, il est souvent nécessaire de déclarer dans votre fichier "hosts" quelque windows chose de la forme:
+
+```
+adresse_ip dataverse.nom_de_domaine magnolia.nom_de_domaine rudi.nom_de_domaine
+```
+
 #### 2. Lancer les services Docker
 
 Pour démarrer les services définis dans les `docker-compose.yml`, exécutez :
@@ -48,6 +57,11 @@ docker compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f 
 Cette commande démarrera les conteneurs en arrière-plan.
 
 Une fois les conteneurs en cours d'exécution, accédez à l'application sur [http://rudi.localhost/](http://rudi.localhost/) (peux varier en fonction de ce que contient le fichier `.env`).
+
+Il est possible d'accéder :
+
+- Au catalogue **Dataverse** sur *http://dataverse.xxxxx*
+
 
 #### Arrêter les services
 Pour arrêter les services, exécutez :
