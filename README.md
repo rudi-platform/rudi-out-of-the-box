@@ -40,7 +40,7 @@ Consultez et modifiez les variables d'environnement si nécessaire dans le fichi
 **Focus :**
 La variable *base_dn* permet de préciser le nom du serveur Rudi.
 La valeur par défaut est *localhost* mais il est possible d'indiquer un nom de machine ou un nom de domaine.
-Si l'on précise un nom de machine, il est souvent nécessaire de déclarer dans votre fichier "hosts" quelque windows chose de la forme:
+Si l'on précise un nom de machine, il est souvent nécessaire de déclarer dans votre fichier "hosts" windows quelque chose de la forme:
 
 ```
 adresse_ip dataverse.nom_de_domaine magnolia.nom_de_domaine rudi.nom_de_domaine
@@ -60,7 +60,9 @@ Une fois les conteneurs en cours d'exécution, accédez à l'application sur [ht
 
 Il est possible d'accéder :
 
-- Au catalogue **Dataverse** sur *http://dataverse.xxxxx*
+- Au catalogue **Dataverse** sur *http://dataverse.<nom_de_domaine>*
+- Au CMS Headless **Magnolia** sur *http://magnolia.<nom_de_domaine>*
+- Aux services sur *http://rudi.<nom_de_domaine>/<nom_du_service>*
 
 
 #### Arrêter les services
