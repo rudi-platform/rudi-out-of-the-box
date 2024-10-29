@@ -10,17 +10,6 @@ CREATE USER acl WITH
 ALTER USER acl SET search_path TO acl_data, public;
 ALTER USER acl WITH PASSWORD 'acl';
 
-CREATE USER acl2 WITH
-  LOGIN
-  NOSUPERUSER
-  INHERIT
-  NOCREATEDB
-  NOCREATEROLE
-  NOREPLICATION;
-
-ALTER USER acl2 SET search_path TO acl_data, public;
-ALTER USER acl2 WITH PASSWORD 'acl2';
-
 CREATE USER kalim WITH
   LOGIN
   NOSUPERUSER
@@ -73,9 +62,6 @@ CREATE USER project WITH
   NOCREATEROLE
   NOREPLICATION;
 
-ALTER USER project SET search_path TO project_data, public;
-ALTER USER project WITH PASSWORD 'project';
-
 CREATE USER selfdata WITH
   LOGIN
   NOSUPERUSER
@@ -118,17 +104,6 @@ CREATE USER apigateway WITH
 
 ALTER USER apigateway SET search_path TO apigateway_data, public;
 ALTER USER apigateway WITH PASSWORD 'apigateway';
-
-CREATE USER consent WITH
-  LOGIN
-  NOSUPERUSER
-  INHERIT
-  NOCREATEDB
-  NOCREATEROLE
-  NOREPLICATION;
-
-ALTER USER consent SET search_path TO consent_data, public;
-ALTER USER consent WITH PASSWORD 'consent';
 
 CREATE USER projekt WITH
   LOGIN
