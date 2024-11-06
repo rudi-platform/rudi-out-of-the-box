@@ -1,113 +1,119 @@
-# **rudi-plateform/rudi-oob**
+<br>
+<p align="center">
+  <a href="https://rudi.rennesmetropole.fr/">
+  <img src="https://blog.rudi.bzh/wp-content/uploads/2020/11/logo_bleu_orange.svg" width=100px alt="Rudi logo" />  </a>
+</p>
 
-Bienvenue dans le projet **rudi-plateform/rudi-oob** ! Ceci est une version de lancement rapide pour tester et adopter [rudi-portal](https://github.com/rudi-platform/rudi-portal) dans un environnement local. Cette implémentation __NE DOIT PAS__ être utilisé en l'état en production (Il convient de changer et adapter la configuration notamment les mots de passe). 
+<h2 align="center" >Rudi Out of the Box 📦</h3>
+<p align="center">La version dockerisée du Portail Rudi permettant de tester le logiciel en local.</p>
 
-## Table des matières
-2. [Prérequis](#prérequis)
-4. [Utilisation](#utilisation)
-5. [Structure du projet](#structure-du-projet)
-6. [Tests](#tests)
-7. [Contribuer](#contribuer)
-8. [Projets liés](#projets-liés)
-9. [Licence](#licence)
+<p align="center"><a href="https://rudi.rennesmetropole.fr/">🌐 Instance de Rennes Métropole</a> · <a href="doc.rudi.bzh">📚 Documentation</a> ·  <a href="https://blog.rudi.bzh/">📰 Blog</a><p>
 
----
+</div>
 
-## Prérequis
+## Lancer Rudi en local 🖥️
 
-Avant de commencer, assurez-vous d'avoir installé les éléments suivants sur votre machine :
-- [Docker](https://docs.docker.com/get-docker/)
-- [Docker Compose](https://docs.docker.com/compose/install/)
-- [Git LFS](https://git-lfs.com/)
+### Avant de commencer 
 
+Pour faire tourner RUDI sur votre machine, vous aurez besoin de :
+- [Docker](https://docs.docker.com/get-docker/) - Pour la containerisation
+- [Docker Compose](https://docs.docker.com/compose/install/) - Pour tout orchestrer 
+- [Git LFS](https://git-lfs.com/) - Pour gérer les grands fichiers
 
-## Utilisation
-
-### Récupération des sources
-
-Clonez ce dépôt et accédez au répertoire du projet :
-
-```
+### 1. Récupérez le code
+```bash
 git clone https://github.com/rudi-plateform/rudi-oob.git
 cd rudi-oob
 git lfs pull
 ```
 
-#### 1. Renseignez le fichier `.env`
-
-Consultez et modifiez les variables d'environnement si nécessaire dans le fichier `.env`.
-
-**Focus :**
-La variable *base_dn* permet de préciser le nom du serveur Rudi.
-La valeur par défaut est *localhost* mais il est possible d'indiquer un nom de machine ou un nom de domaine.
-Si l'on précise un nom de machine, il est souvent nécessaire de déclarer dans votre fichier "hosts" windows quelque chose de la forme:
-
+### 2. Configurez votre environnement
+Jetez un œil au fichier `.env` :
+- La variable `base_dn` définit le nom de votre serveur RUDI (par défaut : `localhost`)
+- Vous voulez utiliser un nom personnalisé ? Ajoutez dans votre fichier hosts :
 ```
-adresse_ip dataverse.nom_de_domaine magnolia.nom_de_domaine rudi.nom_de_domaine
+<ip> dataverse.<votre_nom> magnolia.<votre_nom> rudi.<votre_nom>
 ```
 
-#### 2. Lancer les services Docker
+### 3. Lancez les services
 
-Pour démarrer les services définis dans les `docker-compose.yml`, exécutez :
-
-```
-docker compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" up -d
-```
-
-Cette commande démarrera les conteneurs en arrière-plan.
-
-Une fois les conteneurs en cours d'exécution, accédez à l'application sur [http://rudi.localhost/](http://rudi.localhost/) (peux varier en fonction de ce que contient le fichier `.env`).
-
-Il est possible d'accéder :
-
-- Au catalogue **Dataverse** sur *http://dataverse.<nom_de_domaine>*
-- Au CMS Headless **Magnolia** sur *http://magnolia.<nom_de_domaine>*
-- Aux services sur *http://rudi.<nom_de_domaine>/<nom_du_service>*
-
-
-#### Arrêter les services
-
-Pour arrêter les services, exécutez :
-
-```
-docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*"  down
+Une seule commande pour tout démarrer :
+```bash
+docker compose -f .\docker-compose-magnolia.yml \
+               -f .\docker-compose-rudi.yml \
+               -f .\docker-compose-dataverse.yml \
+               -f .\docker-compose-network.yml \
+               --profile "*" up -d
 ```
 
-#### Recréer les conteneurs (si nécessaire)
+### Où trouver quoi ? 🔎
+- RUDI vous attend sur `http://rudi.localhost/` (ou l'adresse définie dans votre `.env`)
+- Le catalogue Dataverse : `http://dataverse.<votre_nom>`
+- Le CMS Magnolia : `http://magnolia.<votre_nom>`
+- Les services RUDI : `http://rudi.<votre_nom>/<service>`
 
-```
-docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" up --build
-```
+### Les commandes utiles
 
-#### Construire uniquement les images
-
-```
-docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" build
-```
-
-## Structure du projet
-
-Voici un aperçu de la structure des fichiers du projet :
-
-```
-├── config/ : contient les données de configuration et d'initialisation __en lecture seul__ des différents containers.
-├── data/ : Donnée en lecture écriture nécessaire au bon fonctionnement. A terme, devrait contenir seulement une strucutre de dossier vide.
-├── image/ : Donnée pour construire certaine image "à la volée" depuis des images publiques.
-└── .env                  # Exemple de fichier d'environnement
+Besoin de tout arrêter  ?
+```bash
+docker compose -f .\docker-compose-magnolia.yml \
+               -f .\docker-compose-rudi.yml \
+               -f .\docker-compose-dataverse.yml \
+               -f .\docker-compose-network.yml \
+               --profile "*" down
 ```
 
-## Tests
+Envie de tout reconstruire ?
+```bash
+docker compose -f .\docker-compose-magnolia.yml \
+               -f .\docker-compose-rudi.yml \
+               -f .\docker-compose-dataverse.yml \
+               -f .\docker-compose-network.yml \
+               --profile "*" up --build
+```
 
-Pour facilité les tests, il est possible de lancer partiellement des grappes de services grace au tag. Utilise l'option --profile dans le lancement des commandes docker pour lancer uniquement les services voulus.
+Juste reconstruire les images ?
+```bash
+docker compose -f .\docker-compose-magnolia.yml \
+               -f .\docker-compose-rudi.yml \
+               -f .\docker-compose-dataverse.yml \
+               -f .\docker-compose-network.yml \
+               --profile "*" build
+```
 
-## Contribuer
+### Tests à la carte
 
-Merci de vouloir contribuer ! Consultez le fichier [CONTRIBUTING.md](./CONTRIBUTING.md) pour plus d'informations.
+Vous pouvez lancer uniquement les services qui vous intéressent grâce à l'option `--profile`. 
+<br>
 
-## Projets liés
+## L'écosystème Rudi (les autres dépôts de code)
 
-Ce projet est lié à [rudi-plateform/rudi-portail](https://github.com/rudi-platform/rudi-portal). Veuillez consulter ce projet pour en savoir plus sur l'intégration ou les dépendances partagées.
+Le portail Rudi n'est qu'une partie de l'écosystème de la plateforme Rudi. Pour l'utiliser plainement, réferez vous aux autres dépôts de code de l'organisation:
 
-## Licence
+### [Le Portail Rudi ✨](https://github.com/rudi-platform/rudi-portal)
+La partie grand public de la plateforme Rudi.
 
-Ce projet est sous licence [EUPL 1.2]. Voir le fichier [Licence](./LICENSE) pour plus de détails.
+### Nœud Producteur RUDI 
+
+Un ensemble d'outils pour les producteurs de données comprenant :
+
+#### [Node Manager 👀](https://github.com/rudi-platform/rudi-node-manager)
+Gérez les accès et les interactions avec vos données.
+
+#### [Node Storage 💽](https://github.com/rudi-platform/rudi-node-storage)
+Stockez et organisez vos données en toute sécurité.
+
+#### [Node Catalog 🗂️](https://github.com/rudi-platform/rudi-node-catalog)
+Décrivez et indexez vos jeux de données pour les rendre facilement trouvables.
+
+## Contribuer à Rudi
+
+Nous accueillons et encourageons les contributions de la communauté. Voici comment vous pouvez participer :
+- 🛣️ [Feuille de route](https://github.com/orgs/rudi-platform/projects/2)
+- 🐞 Pour les bugs :
+  - Version "out of the box" : [créez une issue ici](https://github.com/rudi-platform/rudi-out-of-the-box/issues)
+  - Composants spécifiques : rendez-vous sur la section "Issues" du dépôt concerné
+- ✨ Pour les contributions de code, direction les dépôts des différents composants. Plus d'informations sur les différentes manières de contribuer sur notre page [Contribuer](https://github.com/rudi-platform/.github/blob/main/CONTRIBUTING.md)
+- 🗣️ [Participer aux discussions](https://github.com/orgs/rudi-platform/discussions)
+
+
