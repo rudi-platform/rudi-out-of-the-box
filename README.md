@@ -25,12 +25,14 @@ Avant de commencer, assurez-vous d'avoir installé les éléments suivants sur v
 
 ### Récupération des sources
 
-Clonez ce dépôt et accédez au répertoire du projet :
+Clonez ce dépôt, accédez au répertoire du projet et donner les droits d'accès nécessaires :
 
 ```
 git clone https://github.com/rudi-plateform/rudi-oob.git
 cd rudi-oob
 git lfs pull
+chmod -R 777 data
+chmod -R 755 config
 ```
 
 #### 1. Renseignez le fichier `.env`
