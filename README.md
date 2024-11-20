@@ -28,7 +28,7 @@ Avant de commencer, assurez-vous d'avoir installé les éléments suivants sur v
 Clonez ce dépôt, accédez au répertoire du projet et donner les droits d'accès nécessaires :
 
 ```
-git clone https://github.com/rudi-plateform/rudi-oob.git
+git clone https://github.com/rudi-platform/rudi-out-of-the-box.git
 cd rudi-oob
 git lfs pull
 chmod -R 777 data
