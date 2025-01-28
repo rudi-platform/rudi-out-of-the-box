@@ -76,7 +76,10 @@ services:
       - "traefik.enable=true"
       - "traefik.http.services.konsult.loadbalancer.server.scheme=https"
       - "traefik.http.services.konsult.loadbalancer.server.port=8443"
-      - "traefik.http.routers.konsult.rule=Host(`rudi.${base_dn}`) && PathPrefix(`/konsult`)"
+      - "traefik.http.middlewares.konsult-robots-rewritepath.replacepathregex.regex=^/robots\\.txt"
+      - "traefik.http.middlewares.konsult-robots-rewritepath.replacepathregex.replacement=/konsult/v1/robots/robots"
+      - "traefik.http.routers.konsult.middlewares=konsult-robots-rewritepath"
+      - "traefik.http.routers.konsult.rule=Host(`rudi.${base_dn}`) && ( PathPrefix(`/konsult`) || Path(`/robots.txt`) )"
 
   kalim:
     labels:

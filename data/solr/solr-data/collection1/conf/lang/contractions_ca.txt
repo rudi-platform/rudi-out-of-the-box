@@ -1,3 +1,8 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2e81866bfaae9de527d619fe83b6c9db711dddd142a3f3847e6b18b92252abe3
-size 135
+# Set of Catalan contractions for ElisionFilter
+# TODO: load this as a resource from the analyzer and sync it in build.xml
+d
+l
+m
+n
+s
+t

@@ -9,4 +9,6 @@ areas:
       projectvalueDetail:
         id: rudi:components/projectvalue/projectvalueDetail
       projectvalueSimple:
-        id: rudi:components/projectvalue/projectvalueSimple 
+        id: rudi:components/projectvalue/projectvalueSimple  
+      projectvalueSitemap:
+        id: rudi:components/projectvalue/projectvalueSitemap

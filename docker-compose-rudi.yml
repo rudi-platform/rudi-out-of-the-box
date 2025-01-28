@@ -72,7 +72,7 @@ services:
       - ./config/acl:/etc/rudi/config/
       - ./data/acl:/opt/rudi/data/
     environment:
-      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF -Dbase_dn=${base_dn}
     profiles:
       - portail
 
@@ -107,7 +107,7 @@ services:
       - ./config/strukture:/etc/rudi/config/
       - ./data/strukture:/opt/rudi/data/
     environment:
-      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF -Dbase_dn=${base_dn}
     profiles:
       - portail
 
@@ -143,7 +143,7 @@ services:
       - ./data/konsult:/opt/rudi/data/
       - /var/log/rudi/konsult:/var/log/rudi/konsult
     environment:
-      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF -Dbase_dn=${base_dn}
     profiles:
       - portail
 
@@ -178,7 +178,7 @@ services:
       - ./data/projekt:/opt/rudi/data/
       - /var/log/rudi/projekt:/var/log/rudi/projekt
     environment:
-      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF -Dbase_dn=${base_dn}
     profiles:
       - portail
 
@@ -195,7 +195,7 @@ services:
       - ./config/selfdata:/etc/rudi/config/
       - ./data/selfdata:/opt/rudi/data/
     environment:
-      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF -Dbase_dn=${base_dn}
     profiles:
       - portail
 
@@ -227,6 +227,8 @@ services:
       - ./config/mailhog/auth.txt:/mailhog.auth
     profiles:
       - portail
+    ports:
+      - "8025:8025"
 
   portail:
     ports:

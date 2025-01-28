@@ -1,3 +1,5 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:90c836649d262ce4d0ba02b937a1ccfb8d7d2b121c7450735acb2b8f35501f7a
-size 124
+# Set of Irish hyphenations for StopFilter
+# TODO: load this as a resource from the analyzer and sync it in build.xml
+h
+n
+t

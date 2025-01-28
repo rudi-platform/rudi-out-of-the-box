@@ -1,3 +1,23 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:788de9a3a0b5f845c50d98c640b873d4622970c9f02d2c251fe8247c6c88b130
-size 220
+# Set of Italian contractions for ElisionFilter
+# TODO: load this as a resource from the analyzer and sync it in build.xml
+c
+l 
+all 
+dall 
+dell 
+nell 
+sull 
+coll 
+pell 
+gl 
+agl 
+dagl 
+degl 
+negl 
+sugl 
+un 
+m 
+t 
+s 
+v 
+d

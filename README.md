@@ -72,19 +72,19 @@ Il est possible d'accéder :
 Pour arrêter les services, exécutez :
 
 ```
-docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*"  down
+docker compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*"  down
 ```
 
 #### Recréer les conteneurs (si nécessaire)
 
 ```
-docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" up --build
+docker compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" up --build
 ```
 
 #### Construire uniquement les images
 
 ```
-docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" build
+docker compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" build
 ```
 
 ## Structure du projet
