@@ -25,12 +25,14 @@ Avant de commencer, assurez-vous d'avoir installé les éléments suivants sur v
 
 ### Récupération des sources
 
-Clonez ce dépôt et accédez au répertoire du projet :
+Clonez ce dépôt, accédez au répertoire du projet et donner les droits d'accès nécessaires :
 
 ```
-git clone https://github.com/rudi-plateform/rudi-oob.git
+git clone https://github.com/rudi-platform/rudi-out-of-the-box.git
 cd rudi-oob
 git lfs pull
+chmod -R 777 data
+chmod -R 755 config
 ```
 
 #### 1. Renseignez le fichier `.env`
@@ -70,19 +72,19 @@ Il est possible d'accéder :
 Pour arrêter les services, exécutez :
 
 ```
-docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*"  down
+docker compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*"  down
 ```
 
 #### Recréer les conteneurs (si nécessaire)
 
 ```
-docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" up --build
+docker compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" up --build
 ```
 
 #### Construire uniquement les images
 
 ```
-docker-compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" build
+docker compose -f .\docker-compose-magnolia.yml -f .\docker-compose-rudi.yml -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml --profile "*" build
 ```
 
 ## Structure du projet

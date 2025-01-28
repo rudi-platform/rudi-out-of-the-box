@@ -1,3 +1,6 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d751ccdfa7f818d1b6e402389a2d65a9fa6e1af97bfd4b9b778939a6b3e564ec
-size 168
+# Set of overrides for the dutch stemmer
+# TODO: load this as a resource from the analyzer and sync it in build.xml
+fiets	fiets
+bromfiets	bromfiets
+ei	eier
+kind	kinder

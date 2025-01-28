@@ -1,8 +1,7 @@
-*.zip filter=lfs diff=lfs merge=lfs -text
-*.backup filter=lfs diff=lfs merge=lfs -text
-*.jar filter=lfs diff=lfs merge=lfs -text
-data/dataverse/dataverse-files/** filter=lfs diff=lfs merge=lfs -text
-data/solr/** filter=lfs diff=lfs merge=lfs -text
-data/magnolia/repository/** filter=lfs diff=lfs merge=lfs -text
-*.tgz filter=lfs diff=lfs merge=lfs -text
+./config/rudi-init/rudi.backup filter=lfs diff=lfs merge=lfs -text
+./config/dataverse-init/dataverse.backup filter=lfs diff=lfs merge=lfs -text
+./image/magnolia/ROOT-6.2.40.tgz filter=lfs diff=lfs merge=lfs -text
+./data/dataverse/dataverse-files/10.5072/FK2/LIBZG5 filter=lfs diff=lfs merge=lfs -text
+./data/dataverse/dataverse-files/10.5072/FK2/ZFYJTG filter=lfs diff=lfs merge=lfs -text
+./data/dataverse/dataverse-files/10.5072/FK2/7QVL3D filter=lfs diff=lfs merge=lfs -text
 *.war filter=lfs diff=lfs merge=lfs -text
