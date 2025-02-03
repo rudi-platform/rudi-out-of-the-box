@@ -27,7 +27,7 @@ spring:
         - id: acl_service_oauth2
           uri: lb://RUDI-ACL/
           predicates:
-            - Path=/oauth/**
+            - Path=/oauth2/**
         - id: kalim_service
           uri: lb://RUDI-KALIM/
           predicates:
