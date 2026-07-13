@@ -45,7 +45,7 @@ Pour que la configuration soit prise en compte, redémarrer les microservices co
 Arrêter le container de mailhog :
 
 ```bash
-docker compose -f .\docker-compose-rudi.yml --profile "*" down mailhog
+docker compose -f ./docker-compose-rudi.yml --profile "*" down mailhog
 ```
 
 Dans le fichier `docker-compose-rudi.yml`, supprimer la section concernant le service `mailhog`.

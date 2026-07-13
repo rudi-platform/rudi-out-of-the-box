@@ -41,7 +41,7 @@ Modifier le fichier `.env` tel qu'indiqué dans le [README](../../README.md)
 Démarrer les services :
 
 ```bash
-docker compose -f .\docker-compose-dataverse.yml -f .\docker-compose-network.yml up -d
+docker compose -f ./docker-compose-dataverse.yml -f ./docker-compose-network.yml up -d
 ```
 
 

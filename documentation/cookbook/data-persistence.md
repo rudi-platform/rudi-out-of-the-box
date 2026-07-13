@@ -37,14 +37,14 @@ mkdir -p database-data/magnolia
 Copier le contenu du répertoire des conteneurs ``/var/lib/postgresql/data/`` dans le répertoire ``./database-data/<module>``.
 
 > ```bash 
-> docker compose -f .\docker-compose-<module>.yml --profile "*" cp <module>-database:/var/lib/postgresql/data/ ./database-data/<module>
+> docker compose -f ./docker-compose-<module>.yml --profile "*" cp <module>-database:/var/lib/postgresql/data/ ./database-data/<module>
 > ```
 
 Exemple :
 > ```bash 
-> docker compose -f .\docker-compose-rudi.yml --profile "*" cp database:/var/lib/postgresql/data/ ./database-data/rudi
-> docker compose -f .\docker-compose-magnolia.yml --profile "*" cp magnolia-database:/var/lib/postgresql/data/ ./database-data/magnolia
-> docker compose -f .\docker-compose-dataverse.yml --profile "*" cp dataverse-database:/var/lib/postgresql/data/ ./database-data/dataverse
+> docker compose -f ./docker-compose-rudi.yml --profile "*" cp database:/var/lib/postgresql/data/ ./database-data/rudi
+> docker compose -f ./docker-compose-magnolia.yml --profile "*" cp magnolia-database:/var/lib/postgresql/data/ ./database-data/magnolia
+> docker compose -f ./docker-compose-dataverse.yml --profile "*" cp dataverse-database:/var/lib/postgresql/data/ ./database-data/dataverse
 > ```
 
 ## Modification de la configuration docker-compose
