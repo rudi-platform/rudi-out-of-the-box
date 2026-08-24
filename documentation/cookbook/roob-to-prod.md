@@ -223,8 +223,8 @@ Afin de passer en production, il est nécessaire de mettre en place un certifica
 
 Pour ce faire, se référrer à :
 
-- [Comment mettre en place un certificat SSL pour traefik ?](./documentation/cookbook/treafik-certificat-ssl.md)
-- [Comment passer de traefik à Apache ?](./documentation/cookbook/treafik-to-apache.md)
+- [Comment mettre en place un certificat SSL pour traefik ?](./treafik-certificat-ssl.md)
+- [Comment passer de traefik à Apache ?](./treafik-to-apache.md)
 
 ## Gestion des Keystore
 
@@ -234,6 +234,13 @@ Le portail RUDI comporte plusieurs KeyStore :
 - Le keystore de chiffrement des consentements
 - Le keystore de chiffrement des données personnelles
 - Le keystore de chiffrement des clés d'accès aux données
+- Le keystore de signature des tokens JWT
+
+### Gestion du keystore JWT
+
+Pour configurer un keystore JWT persisté permettant la signature des tokens JWT, se référer à :
+
+- [Comment générer une clé privée persistée pour les certificats des JWT ?](./configuration-acl-jwt.md)
 
 ### Gestion des Keystore - SSL
 

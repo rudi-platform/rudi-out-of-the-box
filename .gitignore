@@ -1,1 +1,4 @@
 /.project
+/config/konsult/custom_logo
+/config/konsult/style-override.css
+/postgresql_data_rudi

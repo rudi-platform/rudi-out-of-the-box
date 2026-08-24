@@ -3,7 +3,7 @@
   "info" : {
     "title" : "Dataverse API",
     "description" : "Open source research data repository software.",
-    "version" : "6.5"
+    "version" : "6.9"
   },
   "tags" : [ {
     "name" : "addFileToDataset",
@@ -595,6 +595,33 @@
         "responses" : {
           "200" : {
             "description" : "OK"
+          }
+        }
+      }
+    },
+    "/access/dataverseFeaturedItemImage/{itemId}" : {
+      "get" : {
+        "operationId" : "Access_getDataverseFeatureItemImage",
+        "parameters" : [ {
+          "name" : "itemId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "image/png" : {
+                "schema" : {
+                  "format" : "binary",
+                  "type" : "string"
+                }
+              }
+            }
           }
         }
       }
@@ -1405,6 +1432,29 @@
         }
       }
     },
+    "/admin/datasetfield/setDisplayOnCreate" : {
+      "post" : {
+        "operationId" : "DatasetFieldServiceApi_setDisplayOnCreate",
+        "parameters" : [ {
+          "name" : "datasetFieldType",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "setDisplayOnCreate",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/admin/datasetfield/{name}" : {
       "get" : {
         "operationId" : "DatasetFieldServiceApi_getByName",
@@ -1569,6 +1619,12 @@
           "required" : true,
           "schema" : {
             "type" : "string"
+          }
+        }, {
+          "name" : "getEffective",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
           }
         } ],
         "responses" : {
@@ -2425,6 +2481,12 @@
             "type" : "string"
           }
         }, {
+          "name" : "server",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
           "name" : "state",
           "in" : "query",
           "schema" : {
@@ -2545,6 +2607,24 @@
           "name" : "id",
           "in" : "path",
           "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/admin/rateLimitStats" : {
+      "get" : {
+        "operationId" : "Admin_rateLimitStats",
+        "parameters" : [ {
+          "name" : "deltaMinutesFilter",
+          "in" : "query",
           "schema" : {
             "format" : "int64",
             "type" : "integer"
@@ -2781,7 +2861,25 @@
         "operationId" : "Admin_listAllSettings",
         "responses" : {
           "200" : {
-            "description" : "OK"
+            "description" : "All database options successfully queried",
+            "content" : { }
+          }
+        }
+      },
+      "put" : {
+        "operationId" : "Admin_putAllSettings",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "All database options successfully updated"
           }
         }
       }
@@ -2837,6 +2935,29 @@
       }
     },
     "/admin/settings/{name}/lang/{lang}" : {
+      "get" : {
+        "operationId" : "Admin_getSetting",
+        "parameters" : [ {
+          "name" : "lang",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      },
       "put" : {
         "operationId" : "Admin_putSettingLang",
         "parameters" : [ {
@@ -3063,116 +3184,6 @@
           "name" : "alias",
           "in" : "path",
           "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK"
-          }
-        }
-      }
-    },
-    "/admin/test/datasets/{id}/externalTool/{toolId}" : {
-      "get" : {
-        "operationId" : "TestApi_getExternalToolforDatasetById",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "toolId",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "type",
-          "in" : "query",
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK"
-          }
-        }
-      }
-    },
-    "/admin/test/datasets/{id}/externalTools" : {
-      "get" : {
-        "operationId" : "TestApi_getDatasetExternalToolsforFile",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "type",
-          "in" : "query",
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK"
-          }
-        }
-      }
-    },
-    "/admin/test/files/{id}/externalTool/{toolId}" : {
-      "get" : {
-        "operationId" : "TestApi_getExternalToolForFileById",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "toolId",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "type",
-          "in" : "query",
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK"
-          }
-        }
-      }
-    },
-    "/admin/test/files/{id}/externalTools" : {
-      "get" : {
-        "operationId" : "TestApi_getExternalToolsForFile",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "type",
-          "in" : "query",
           "schema" : {
             "type" : "string"
           }
@@ -3753,6 +3764,40 @@
             "description" : "OK"
           }
         }
+      },
+      "put" : {
+        "operationId" : "Datasets_updateDatasetTypeLinksWithMetadataBlocks",
+        "parameters" : [ {
+          "name" : "idOrName",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/datasets/datasetTypes/{idOrName}/licenses" : {
+      "put" : {
+        "operationId" : "Datasets_updateDatasetTypeWithLicenses",
+        "parameters" : [ {
+          "name" : "idOrName",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
       }
     },
     "/datasets/datasetTypes/{id}" : {
@@ -3788,6 +3833,12 @@
           "schema" : {
             "type" : "string"
           }
+        }, {
+          "name" : "version",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
         } ],
         "responses" : {
           "200" : {
@@ -3799,6 +3850,14 @@
     "/datasets/listCurationStates" : {
       "get" : {
         "operationId" : "Datasets_getCurationStates",
+        "parameters" : [ {
+          "name" : "includeHistory",
+          "in" : "query",
+          "schema" : {
+            "default" : false,
+            "type" : "boolean"
+          }
+        } ],
         "responses" : {
           "200" : {
             "description" : "OK"
@@ -4082,6 +4141,24 @@
         }
       }
     },
+    "/datasets/{identifier}/assignments/history" : {
+      "get" : {
+        "operationId" : "Datasets_getRoleAssignmentHistory",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/datasets/{identifier}/assignments/{id}" : {
       "delete" : {
         "operationId" : "Datasets_deleteAssignment",
@@ -4199,6 +4276,24 @@
           }
         },
         "deprecated" : true
+      }
+    },
+    "/datasets/{identifier}/files/assignments/history" : {
+      "get" : {
+        "operationId" : "Datasets_getFilesRoleAssignmentHistory",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
       }
     },
     "/datasets/{identifier}/guestbookEntryAtRequest" : {
@@ -4372,6 +4467,98 @@
         }
       }
     },
+    "/datasets/{identifier}/pidReconcile" : {
+      "put" : {
+        "operationId" : "Datasets_reconcilePid",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/datasets/{identifier}/storage/quota" : {
+      "get" : {
+        "operationId" : "Datasets_getDatasetQuota",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "showInherited",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      },
+      "put" : {
+        "operationId" : "Datasets_setDatasetQuota",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      },
+      "delete" : {
+        "operationId" : "Datasets_deleteDatasetQuota",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/datasets/{identifier}/storage/use" : {
+      "get" : {
+        "operationId" : "Datasets_getDatasetStorageUse",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/datasets/{identifier}/storageDriver" : {
       "get" : {
         "operationId" : "Datasets_getFileStore",
@@ -4449,6 +4636,24 @@
     "/datasets/{identifier}/timestamps" : {
       "get" : {
         "operationId" : "Datasets_getTimestamps",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/datasets/{identifier}/uploadlimits" : {
+      "get" : {
+        "operationId" : "Datasets_getUploadLimits",
         "parameters" : [ {
           "name" : "identifier",
           "in" : "path",
@@ -4560,6 +4765,30 @@
           "name" : "id",
           "in" : "path",
           "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/datasets/{id}/access" : {
+      "put" : {
+        "operationId" : "Datasets_editVersionTermsOfAccess",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "sourceLastUpdateTime",
+          "in" : "query",
           "schema" : {
             "type" : "string"
           }
@@ -4753,6 +4982,24 @@
         }
       }
     },
+    "/datasets/{id}/availableFileCategories" : {
+      "get" : {
+        "operationId" : "Datasets_getAvailableFileCategories",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/datasets/{id}/citationdate" : {
       "put" : {
         "operationId" : "Datasets_setCitationDate",
@@ -4821,6 +5068,12 @@
           "schema" : {
             "type" : "string"
           }
+        }, {
+          "name" : "includeHistory",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
         } ],
         "responses" : {
           "200" : {
@@ -4860,6 +5113,33 @@
             "type" : "string"
           }
         } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/datasets/{id}/deleteFiles" : {
+      "put" : {
+        "operationId" : "Datasets_deleteDatasetFiles",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "array"
+              }
+            }
+          }
+        },
         "responses" : {
           "200" : {
             "description" : "OK"
@@ -4939,6 +5219,30 @@
         }
       }
     },
+    "/datasets/{id}/download/count" : {
+      "get" : {
+        "operationId" : "Datasets_getDownloadCountByDatasetId",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "includeMDC",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/datasets/{id}/editMetadata" : {
       "put" : {
         "operationId" : "Datasets_editVersionMetadata",
@@ -4955,7 +5259,48 @@
           "schema" : {
             "type" : "boolean"
           }
+        }, {
+          "name" : "sourceLastUpdateTime",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
         } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/datasets/{id}/externalTool/{tid}/toolUrl" : {
+      "post" : {
+        "operationId" : "Datasets_getDatasetExternalToolUrl",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "tid",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
         "responses" : {
           "200" : {
             "description" : "OK"
@@ -5035,6 +5380,77 @@
         }
       }
     },
+    "/datasets/{id}/files/metadata" : {
+      "post" : {
+        "operationId" : "Datasets_updateMultipleFileMetadata",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/datasets/{id}/files/uploadlimit" : {
+      "delete" : {
+        "operationId" : "Datasets_deleteDatasetFilesLimits",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/datasets/{id}/files/uploadlimit/{limit}" : {
+      "post" : {
+        "operationId" : "Datasets_updateDatasetFilesLimits",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/datasets/{id}/globusDownloadParameters" : {
       "get" : {
         "operationId" : "Datasets_getGlobusDownloadParams",
@@ -5078,6 +5494,24 @@
         }, {
           "name" : "locale",
           "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/datasets/{id}/license" : {
+      "put" : {
+        "operationId" : "Datasets_updateLicense",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
           "schema" : {
             "type" : "string"
           }
@@ -5830,6 +6264,38 @@
         }
       }
     },
+    "/datasets/{id}/versions/compareSummary" : {
+      "get" : {
+        "operationId" : "Datasets_getCompareVersionsSummary",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "schema" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "schema" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/datasets/{id}/versions/{versionId1}/compare/{versionId2}" : {
       "get" : {
         "operationId" : "Datasets_getCompareVersions",
@@ -5853,6 +6319,12 @@
           "required" : true,
           "schema" : {
             "type" : "string"
+          }
+        }, {
+          "name" : "includeDeaccessioned",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
           }
         } ],
         "responses" : {
@@ -5999,8 +6471,46 @@
     },
     "/datasets/{id}/versions/{versionId}/citation" : {
       "get" : {
+        "operationId" : "Datasets_getDatasetVersionInternalCitation",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "versionId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "includeDeaccessioned",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/datasets/{id}/versions/{versionId}/citation/{format}" : {
+      "get" : {
         "operationId" : "Datasets_getDatasetVersionCitation",
         "parameters" : [ {
+          "name" : "format",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
           "name" : "id",
           "in" : "path",
           "required" : true,
@@ -6270,6 +6780,77 @@
         }
       }
     },
+    "/datasets/{id}/versions/{versionId}/versionNote" : {
+      "get" : {
+        "operationId" : "Datasets_getVersionCreationNote",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "versionId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      },
+      "put" : {
+        "operationId" : "Datasets_addVersionNote",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "versionId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      },
+      "delete" : {
+        "operationId" : "Datasets_deleteVersionNote",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "versionId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/datasets/{id}/versions/{versionNumber}/metadata/{block}" : {
       "get" : {
         "operationId" : "Datasets_getVersionMetadataBlock",
@@ -6464,9 +7045,85 @@
         }
       }
     },
+    "/dataverseFeaturedItems/{id}" : {
+      "put" : {
+        "operationId" : "DataverseFeaturedItems_updateFeaturedItem",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      },
+      "delete" : {
+        "operationId" : "DataverseFeaturedItems_deleteFeaturedItem",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/dataverses" : {
       "post" : {
         "operationId" : "Dataverses_addRoot",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/dataverses/{dataverseId}/featuredItems" : {
+      "put" : {
+        "operationId" : "Dataverses_updateFeaturedItems",
+        "parameters" : [ {
+          "name" : "dataverseId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "format" : "int64",
+                  "type" : "integer"
+                }
+              }
+            }
+          }
+        },
         "responses" : {
           "200" : {
             "description" : "OK"
@@ -6483,6 +7140,12 @@
           "required" : true,
           "schema" : {
             "type" : "string"
+          }
+        }, {
+          "name" : "returnChildCount",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
           }
         }, {
           "name" : "returnOwners",
@@ -6564,6 +7227,49 @@
         }
       }
     },
+    "/dataverses/{identifier}/allowedMetadataLanguages" : {
+      "get" : {
+        "operationId" : "Dataverses_getMetadataLanguage",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/dataverses/{identifier}/allowedMetadataLanguages/{metadataLanguage}" : {
+      "put" : {
+        "operationId" : "Dataverses_setMetadataLanguage",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "metadataLanguage",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/dataverses/{identifier}/assignments" : {
       "get" : {
         "operationId" : "Dataverses_listAssignments",
@@ -6593,6 +7299,24 @@
         }, {
           "name" : "key",
           "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/dataverses/{identifier}/assignments/history" : {
+      "get" : {
+        "operationId" : "Dataverses_getRoleAssignmentHistory",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
           "schema" : {
             "type" : "string"
           }
@@ -6932,6 +7656,65 @@
       },
       "delete" : {
         "operationId" : "Dataverses_deleteFeaturedCollections",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/dataverses/{identifier}/featuredItems" : {
+      "get" : {
+        "operationId" : "Dataverses_listFeaturedItems",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      },
+      "post" : {
+        "operationId" : "Dataverses_createFeaturedItem",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      },
+      "delete" : {
+        "operationId" : "Dataverses_deleteFeaturedItems",
         "parameters" : [ {
           "name" : "identifier",
           "in" : "path",
@@ -7320,6 +8103,12 @@
             "type" : "string"
           }
         }, {
+          "name" : "datasetType",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
           "name" : "onlyDisplayedOnCreate",
           "in" : "query",
           "schema" : {
@@ -7485,6 +8274,12 @@
           "schema" : {
             "type" : "string"
           }
+        }, {
+          "name" : "showInherited",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
         } ],
         "responses" : {
           "200" : {
@@ -7492,8 +8287,8 @@
           }
         }
       },
-      "delete" : {
-        "operationId" : "Dataverses_deleteCollectionQuota",
+      "put" : {
+        "operationId" : "Dataverses_setCollectionQuota",
         "parameters" : [ {
           "name" : "identifier",
           "in" : "path",
@@ -7507,20 +8302,10 @@
             "description" : "OK"
           }
         }
-      }
-    },
-    "/dataverses/{identifier}/storage/quota/{bytesAllocated}" : {
-      "post" : {
-        "operationId" : "Dataverses_setCollectionQuota",
+      },
+      "delete" : {
+        "operationId" : "Dataverses_deleteCollectionQuota",
         "parameters" : [ {
-          "name" : "bytesAllocated",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "format" : "int64",
-            "type" : "integer"
-          }
-        }, {
           "name" : "identifier",
           "in" : "path",
           "required" : true,
@@ -7577,6 +8362,40 @@
         }
       }
     },
+    "/dataverses/{identifier}/templates" : {
+      "get" : {
+        "operationId" : "Dataverses_getTemplates",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      },
+      "post" : {
+        "operationId" : "Dataverses_createTemplate",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/dataverses/{identifier}/userPermissions" : {
       "get" : {
         "operationId" : "Dataverses_getUserPermissionsOnDataverse",
@@ -7615,6 +8434,43 @@
             }
           }
         },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/dataverses/{identifier}/{type}/linkingDataverses" : {
+      "get" : {
+        "operationId" : "Dataverses_getLinkingDataverseList",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "type",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "alreadyLinking",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "searchTerm",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
         "responses" : {
           "200" : {
             "description" : "OK"
@@ -7883,6 +8739,41 @@
         }
       }
     },
+    "/files/{id}/externalTool/{tid}/toolUrl" : {
+      "post" : {
+        "operationId" : "Files_getExternalToolUrl",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "tid",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/files/{id}/extractNcml" : {
       "post" : {
         "operationId" : "Files_extractNcml",
@@ -7945,6 +8836,12 @@
           "schema" : {
             "type" : "string"
           }
+        }, {
+          "name" : "sourceLastUpdateTime",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
         } ],
         "responses" : {
           "200" : {
@@ -7962,6 +8859,12 @@
           "required" : true,
           "schema" : {
             "type" : "string"
+          }
+        }, {
+          "name" : "replace",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
           }
         } ],
         "responses" : {
@@ -7998,6 +8901,12 @@
           "required" : true,
           "schema" : {
             "type" : "string"
+          }
+        }, {
+          "name" : "replace",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
           }
         } ],
         "responses" : {
@@ -8254,6 +9163,38 @@
           "required" : true,
           "schema" : {
             "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/files/{id}/versionDifferences" : {
+      "get" : {
+        "operationId" : "Files_getFileVersionsList",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "schema" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "schema" : {
+            "format" : "int32",
+            "type" : "integer"
           }
         } ],
         "responses" : {
@@ -8619,6 +9560,27 @@
         "responses" : {
           "200" : {
             "description" : "OK"
+          }
+        }
+      }
+    },
+    "/info/applicationTermsOfUse" : {
+      "get" : {
+        "tags" : [ "info" ],
+        "operationId" : "Info_getApplicationTermsOfUse",
+        "parameters" : [ {
+          "name" : "lang",
+          "in" : "query",
+          "description" : "Two-character language code.",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "en"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Application Terms of Use (General Terms of Use) that must be agreed to at signup."
           }
         }
       }
@@ -9513,6 +10475,25 @@
         }
       }
     },
+    "/info/settings/customization/{customizationFileType}" : {
+      "get" : {
+        "tags" : [ "info" ],
+        "operationId" : "Info_getCustomizationFile",
+        "parameters" : [ {
+          "name" : "customizationFileType",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/info/settings/incompleteMetadataViaApi" : {
       "get" : {
         "tags" : [ "info" ],
@@ -9705,6 +10686,49 @@
           "schema" : {
             "format" : "int64",
             "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/localcontexts/datasets/{id}" : {
+      "get" : {
+        "operationId" : "LocalContexts_getDatasetLocalContexts",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/localcontexts/datasets/{id}/{projectId}" : {
+      "get" : {
+        "operationId" : "LocalContexts_searchLocalContexts",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "projectId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
           }
         } ],
         "responses" : {
@@ -9940,9 +10964,53 @@
         }
       }
     },
+    "/mydata/retrieve/collectionList" : {
+      "get" : {
+        "operationId" : "DataRetrieverAPI_retrieveMyCollectionList",
+        "parameters" : [ {
+          "name" : "userIdentifier",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/notifications/all" : {
       "get" : {
         "operationId" : "Notifications_getAllNotificationsForUser",
+        "parameters" : [ {
+          "name" : "inAppNotificationFormat",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "schema" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "schema" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        }, {
+          "name" : "onlyUnread",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
         "responses" : {
           "200" : {
             "description" : "OK"
@@ -10038,9 +11106,38 @@
         }
       }
     },
+    "/notifications/unreadCount" : {
+      "get" : {
+        "operationId" : "Notifications_getUnreadNotificationsCountForUser",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/notifications/{id}" : {
       "delete" : {
         "operationId" : "Notifications_deleteNotificationForUser",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/notifications/{id}/markAsRead" : {
+      "put" : {
+        "operationId" : "Notifications_markNotificationAsReadForUser",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -10173,6 +11270,16 @@
         }
       }
     },
+    "/roles/userSelectable" : {
+      "get" : {
+        "operationId" : "Roles_getUserSelectableRoles",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/roles/{id}" : {
       "get" : {
         "operationId" : "Roles_viewRole",
@@ -10263,10 +11370,23 @@
           "name" : "query_entities",
           "in" : "query",
           "schema" : {
+            "default" : true,
             "type" : "boolean"
           }
         }, {
+          "name" : "search_service",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
           "name" : "show_api_urls",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "show_collections",
           "in" : "query",
           "schema" : {
             "type" : "boolean"
@@ -10279,12 +11399,6 @@
           }
         }, {
           "name" : "show_facets",
-          "in" : "query",
-          "schema" : {
-            "type" : "boolean"
-          }
-        }, {
-          "name" : "show_my_data",
           "in" : "query",
           "schema" : {
             "type" : "boolean"
@@ -10333,6 +11447,26 @@
             }
           }
         } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/search/services" : {
+      "get" : {
+        "operationId" : "Search_getSearchEngines",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/sendfeedback" : {
+      "post" : {
+        "operationId" : "SendFeedbackAPI_submitFeedback",
         "responses" : {
           "200" : {
             "description" : "OK"
@@ -10407,6 +11541,31 @@
           }
         }, {
           "name" : "consumedIdentifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/users/{identifier}/allowedCollections/{permission}" : {
+      "get" : {
+        "operationId" : "Users_getUserPermittedCollections",
+        "parameters" : [ {
+          "name" : "identifier",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "permission",
           "in" : "path",
           "required" : true,
           "schema" : {
@@ -10535,21 +11694,6 @@
           },
           "userDeletionAllowed" : {
             "type" : "boolean"
-          },
-          "displayIdentifier" : {
-            "type" : "boolean"
-          },
-          "persistentIdName" : {
-            "type" : "string"
-          },
-          "persistentIdDescription" : {
-            "type" : "string"
-          },
-          "persistentIdUrlPrefix" : {
-            "type" : "string"
-          },
-          "logo" : {
-            "type" : "string"
           },
           "emailVerified" : {
             "type" : "boolean"
@@ -10730,6 +11874,9 @@
             "minimum" : 1,
             "type" : "integer"
           },
+          "authenticatedOrcid" : {
+            "type" : "string"
+          },
           "shibIdentityProvider" : {
             "type" : "string"
           },
@@ -10813,9 +11960,6 @@
           },
           "sortByString" : {
             "type" : "string"
-          },
-          "orcidId" : {
-            "type" : "string"
           }
         }
       },
@@ -10838,6 +11982,12 @@
             "type" : "string"
           },
           "position" : {
+            "type" : "string"
+          },
+          "orcid" : {
+            "type" : "string"
+          },
+          "orcidForDisplay" : {
             "type" : "string"
           }
         }
@@ -10884,21 +12034,6 @@
           },
           "oAuthProvider" : {
             "type" : "boolean"
-          },
-          "displayIdentifier" : {
-            "type" : "boolean"
-          },
-          "persistentIdName" : {
-            "type" : "string"
-          },
-          "persistentIdDescription" : {
-            "type" : "string"
-          },
-          "persistentIdUrlPrefix" : {
-            "type" : "string"
-          },
-          "logo" : {
-            "type" : "string"
           },
           "emailVerified" : {
             "type" : "boolean"
@@ -10948,6 +12083,9 @@
           "authenticationService" : {
             "$ref" : "#/components/schemas/AuthenticationServiceBean"
           },
+          "settingsService" : {
+            "$ref" : "#/components/schemas/SettingsServiceBean"
+          },
           "providerFactories" : {
             "type" : "object",
             "additionalProperties" : {
@@ -10968,6 +12106,9 @@
           },
           "em" : {
             "type" : "object"
+          },
+          "orcidProvider" : {
+            "$ref" : "#/components/schemas/AuthenticationProvider"
           },
           "oAuth2AuthProvidersMap" : {
             "type" : "object",
@@ -11077,6 +12218,9 @@
             "items" : {
               "$ref" : "#/components/schemas/OIDCAuthProvider"
             }
+          },
+          "orcidAuthenticationProvider" : {
+            "$ref" : "#/components/schemas/OrcidOAuth2AP"
           }
         }
       },
@@ -11254,9 +12398,6 @@
             "$ref" : "#/components/schemas/SystemConfig"
           },
           "manager" : {
-            "type" : "object"
-          },
-          "provider" : {
             "type" : "object"
           }
         }
@@ -11458,6 +12599,32 @@
           }
         }
       },
+      "CurationStatus" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "label" : {
+            "type" : "string"
+          },
+          "datasetVersion" : {
+            "$ref" : "#/components/schemas/DatasetVersion"
+          },
+          "authenticatedUser" : {
+            "$ref" : "#/components/schemas/AuthenticatedUser"
+          },
+          "createTime" : {
+            "format" : "date",
+            "type" : "string",
+            "example" : "2022-03-10"
+          },
+          "noStatus" : {
+            "type" : "boolean"
+          }
+        }
+      },
       "CustomQuestion" : {
         "required" : [ "questionString" ],
         "type" : "object",
@@ -11603,10 +12770,19 @@
           "dtype" : {
             "type" : "string"
           },
+          "dataverseFeaturedItems" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DataverseFeaturedItem"
+            }
+          },
           "protocol" : {
             "type" : "string"
           },
           "authority" : {
+            "type" : "string"
+          },
+          "separator" : {
             "type" : "string"
           },
           "globalIdCreateTime" : {
@@ -12181,10 +13357,19 @@
           "dtype" : {
             "type" : "string"
           },
+          "dataverseFeaturedItems" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DataverseFeaturedItem"
+            }
+          },
           "protocol" : {
             "type" : "string"
           },
           "authority" : {
+            "type" : "string"
+          },
+          "separator" : {
             "type" : "string"
           },
           "globalIdCreateTime" : {
@@ -12262,6 +13447,10 @@
           "storageUse" : {
             "$ref" : "#/components/schemas/StorageUse"
           },
+          "datasetFileCountLimit" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
           "externalLabelSetName" : {
             "type" : "string"
           },
@@ -12297,6 +13486,10 @@
           },
           "effectivePidGenerator" : {
             "$ref" : "#/components/schemas/PidProvider"
+          },
+          "effectiveDatasetFileCountLimit" : {
+            "format" : "int32",
+            "type" : "integer"
           },
           "files" : {
             "type" : "array",
@@ -12666,6 +13859,12 @@
               "type" : "string"
             }
           },
+          "displayValues" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
           "valuesWithoutNaValues" : {
             "type" : "array",
             "items" : {
@@ -12676,6 +13875,9 @@
             "type" : "boolean"
           },
           "emptyForDisplay" : {
+            "type" : "boolean"
+          },
+          "hasRequiredChildrenDV" : {
             "type" : "boolean"
           },
           "dataverse" : {
@@ -12882,6 +14084,9 @@
           "displayOnCreate" : {
             "type" : "boolean"
           },
+          "localDisplayOnCreate" : {
+            "type" : "boolean"
+          },
           "metadataBlock" : {
             "$ref" : "#/components/schemas/MetadataBlock"
           },
@@ -13005,6 +14210,14 @@
           }
         }
       },
+      "DatasetFieldsValidator" : {
+        "type" : "object",
+        "properties" : {
+          "datasetFieldService" : {
+            "$ref" : "#/components/schemas/DatasetFieldServiceBean"
+          }
+        }
+      },
       "DatasetLinkingDataverse" : {
         "type" : "object",
         "properties" : {
@@ -13030,6 +14243,9 @@
         "properties" : {
           "em" : {
             "type" : "object"
+          },
+          "dataverseService" : {
+            "$ref" : "#/components/schemas/DataverseServiceBean"
           }
         }
       },
@@ -13198,6 +14414,9 @@
           "systemConfig" : {
             "$ref" : "#/components/schemas/SystemConfig"
           },
+          "fprLogService" : {
+            "$ref" : "#/components/schemas/FailedPIDResolutionLoggingServiceBean"
+          },
           "globusServiceBean" : {
             "$ref" : "#/components/schemas/GlobusServiceBean"
           },
@@ -13206,6 +14425,10 @@
           },
           "em" : {
             "type" : "object"
+          },
+          "datasetCount" : {
+            "format" : "int64",
+            "type" : "integer"
           }
         }
       },
@@ -13218,6 +14441,18 @@
           },
           "name" : {
             "type" : "string"
+          },
+          "metadataBlocks" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/MetadataBlock"
+            }
+          },
+          "licenses" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/License"
+            }
           }
         }
       },
@@ -13250,6 +14485,11 @@
           "minorVersionNumber" : {
             "format" : "int64",
             "type" : "integer"
+          },
+          "deaccessionNote" : {
+            "maxLength" : 1000,
+            "minLength" : 0,
+            "type" : "string"
           },
           "versionNote" : {
             "maxLength" : 1000,
@@ -13297,15 +14537,12 @@
             "type" : "string",
             "example" : "2022-03-10"
           },
-          "archiveNote" : {
-            "maxLength" : 1000,
-            "minLength" : 0,
-            "type" : "string"
-          },
           "archivalCopyLocation" : {
             "type" : "string"
           },
           "deaccessionLink" : {
+            "maxLength" : 1260,
+            "minLength" : 0,
             "type" : "string"
           },
           "contributorNames" : {
@@ -13329,8 +14566,11 @@
               "$ref" : "#/components/schemas/WorkflowComment"
             }
           },
-          "externalStatusLabel" : {
-            "type" : "string"
+          "curationStatuses" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CurationStatus"
+            }
           },
           "dvd" : {
             "$ref" : "#/components/schemas/DatasetVersionDifference"
@@ -13362,8 +14602,8 @@
           "archivalCopyLocationMessage" : {
             "type" : "string"
           },
-          "deaccessionLinkAsGlobalId" : {
-            "$ref" : "#/components/schemas/GlobalId"
+          "deaccessionLinkAsURLString" : {
+            "type" : "string"
           },
           "versionDate" : {
             "type" : "string"
@@ -13615,6 +14855,9 @@
           },
           "localeLastUpdateTime" : {
             "type" : "string"
+          },
+          "currentCurationStatus" : {
+            "$ref" : "#/components/schemas/CurationStatus"
           }
         }
       },
@@ -13719,6 +14962,12 @@
                       "type" : "string"
                     }
                   },
+                  "displayValues" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  },
                   "valuesWithoutNaValues" : {
                     "type" : "array",
                     "items" : {
@@ -13729,6 +14978,9 @@
                     "type" : "boolean"
                   },
                   "emptyForDisplay" : {
+                    "type" : "boolean"
+                  },
+                  "hasRequiredChildrenDV" : {
                     "type" : "boolean"
                   },
                   "dataverse" : {
@@ -13799,11 +15051,15 @@
           },
           "summaryDataForNote" : {
             "type" : "array",
-            "items" : { }
+            "items" : {
+              "$ref" : "#/components/schemas/SummaryNote"
+            }
           },
           "blockDataForNote" : {
             "type" : "array",
-            "items" : { }
+            "items" : {
+              "$ref" : "#/components/schemas/SummaryNote"
+            }
           },
           "differenceSummaryGroups" : {
             "type" : "array",
@@ -13816,6 +15072,16 @@
           },
           "editSummaryForLog" : {
             "type" : "string"
+          },
+          "summaryDifferenceAsJson" : {
+            "type" : "object"
+          },
+          "fileSummaryAsJson" : {
+            "type" : "object"
+          },
+          "totalFileMetadataChangesCount" : {
+            "format" : "int32",
+            "type" : "integer"
           }
         }
       },
@@ -13915,10 +15181,19 @@
           "dtype" : {
             "type" : "string"
           },
+          "dataverseFeaturedItems" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DataverseFeaturedItem"
+            }
+          },
           "protocol" : {
             "type" : "string"
           },
           "authority" : {
+            "type" : "string"
+          },
+          "separator" : {
             "type" : "string"
           },
           "globalIdCreateTime" : {
@@ -13999,6 +15274,10 @@
           "storageUse" : {
             "$ref" : "#/components/schemas/StorageUse"
           },
+          "datasetFileCountLimit" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
           "externalLabelSetName" : {
             "type" : "string"
           },
@@ -14034,6 +15313,10 @@
           },
           "effectivePidGenerator" : {
             "$ref" : "#/components/schemas/PidProvider"
+          },
+          "effectiveDatasetFileCountLimit" : {
+            "format" : "int32",
+            "type" : "integer"
           },
           "name" : {
             "type" : "string"
@@ -14338,6 +15621,61 @@
           }
         }
       },
+      "DataverseFeaturedItem" : {
+        "required" : [ "type" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "dataverse" : {
+            "$ref" : "#/components/schemas/Dataverse"
+          },
+          "dvobject" : {
+            "$ref" : "#/components/schemas/DvObject"
+          },
+          "content" : {
+            "maxLength" : 15000,
+            "type" : "string"
+          },
+          "displayOrder" : {
+            "format" : "int32",
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "type" : {
+            "pattern" : "\\S",
+            "type" : "string"
+          },
+          "imageFileName" : {
+            "type" : "string"
+          },
+          "imageFileUrl" : {
+            "type" : "string"
+          },
+          "dvObject" : {
+            "$ref" : "#/components/schemas/DvObject"
+          }
+        }
+      },
+      "DataverseFeaturedItemServiceBean" : {
+        "type" : "object",
+        "properties" : {
+          "em" : {
+            "type" : "object"
+          },
+          "fileService" : {
+            "$ref" : "#/components/schemas/DataFileServiceBean"
+          },
+          "datasetService" : {
+            "$ref" : "#/components/schemas/DatasetServiceBean"
+          },
+          "permissionService" : {
+            "$ref" : "#/components/schemas/PermissionServiceBean"
+          }
+        }
+      },
       "DataverseFieldTypeInputLevel" : {
         "type" : "object",
         "properties" : {
@@ -14355,6 +15693,9 @@
             "type" : "boolean"
           },
           "required" : {
+            "type" : "boolean"
+          },
+          "displayOnCreate" : {
             "type" : "boolean"
           }
         }
@@ -14628,6 +15969,10 @@
           },
           "rootDataverseExists" : {
             "type" : "boolean"
+          },
+          "dataverseCount" : {
+            "format" : "int64",
+            "type" : "integer"
           }
         }
       },
@@ -14932,10 +16277,19 @@
           "dtype" : {
             "type" : "string"
           },
+          "dataverseFeaturedItems" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DataverseFeaturedItem"
+            }
+          },
           "protocol" : {
             "type" : "string"
           },
           "authority" : {
+            "type" : "string"
+          },
+          "separator" : {
             "type" : "string"
           },
           "globalIdCreateTime" : {
@@ -15051,8 +16405,8 @@
           "solrIndexService" : {
             "$ref" : "#/components/schemas/SolrIndexServiceBean"
           },
-          "searchService" : {
-            "$ref" : "#/components/schemas/SearchServiceBean"
+          "searchServiceFactory" : {
+            "$ref" : "#/components/schemas/SearchServiceFactory"
           },
           "ingestService" : {
             "$ref" : "#/components/schemas/IngestServiceBean"
@@ -15152,6 +16506,15 @@
           },
           "storageUseService" : {
             "$ref" : "#/components/schemas/StorageUseServiceBean"
+          },
+          "dataverseFeaturedItemServiceBean" : {
+            "$ref" : "#/components/schemas/DataverseFeaturedItemServiceBean"
+          },
+          "licenseServiceBean" : {
+            "$ref" : "#/components/schemas/LicenseServiceBean"
+          },
+          "datasetFieldsValidator" : {
+            "$ref" : "#/components/schemas/DatasetFieldsValidator"
           },
           "innerEngine" : {
             "$ref" : "#/components/schemas/EjbDataverseEngineInner"
@@ -15318,6 +16681,14 @@
           }
         }
       },
+      "FailedPIDResolutionLoggingServiceBean" : {
+        "type" : "object",
+        "properties" : {
+          "logFileName" : {
+            "type" : "string"
+          }
+        }
+      },
       "FeaturedDataverseServiceBean" : {
         "type" : "object",
         "properties" : {
@@ -15330,7 +16701,7 @@
         }
       },
       "FieldType" : {
-        "enum" : [ "TEXT", "TEXTBOX", "DATE", "EMAIL", "URL", "FLOAT", "INT", "NONE" ],
+        "enum" : [ "TEXT", "TEXTBOX", "STRING", "DATE", "EMAIL", "URL", "FLOAT", "INT", "NONE" ],
         "type" : "string"
       },
       "FileAccessRequest" : {
@@ -15641,35 +17012,6 @@
             "items" : {
               "$ref" : "#/components/schemas/FileDifferenceDetailItem"
             }
-          }
-        }
-      },
-      "GlobalId" : {
-        "type" : "object",
-        "properties" : {
-          "protocol" : {
-            "type" : "string"
-          },
-          "authority" : {
-            "type" : "string"
-          },
-          "identifier" : {
-            "type" : "string"
-          },
-          "managingProviderId" : {
-            "type" : "string"
-          },
-          "separator" : {
-            "type" : "string"
-          },
-          "urlPrefix" : {
-            "type" : "string"
-          },
-          "complete" : {
-            "type" : "boolean"
-          },
-          "providerId" : {
-            "type" : "string"
           }
         }
       },
@@ -16007,6 +17349,9 @@
           "harvestingUrl" : {
             "type" : "string"
           },
+          "sourceName" : {
+            "type" : "string"
+          },
           "archiveUrl" : {
             "type" : "string"
           },
@@ -16023,6 +17368,9 @@
             "type" : "string"
           },
           "allowHarvestingMissingCVV" : {
+            "type" : "boolean"
+          },
+          "useListRecords" : {
             "type" : "boolean"
           },
           "useOaiIdAsPid" : {
@@ -16055,6 +17403,12 @@
             "type" : "boolean"
           },
           "oai" : {
+            "type" : "boolean"
+          },
+          "metadataSource" : {
+            "type" : "string"
+          },
+          "useListrecords" : {
             "type" : "boolean"
           },
           "useOaiIdentifiersAsPids" : {
@@ -16211,14 +17565,11 @@
           "solrClientService" : {
             "$ref" : "#/components/schemas/SolrClientService"
           },
+          "solrClientIndexService" : {
+            "$ref" : "#/components/schemas/SolrClientIndexService"
+          },
           "dataFileService" : {
             "$ref" : "#/components/schemas/DataFileServiceBean"
-          },
-          "variableService" : {
-            "$ref" : "#/components/schemas/VariableServiceBean"
-          },
-          "indexBatchService" : {
-            "$ref" : "#/components/schemas/IndexBatchServiceBean"
           },
           "datasetFieldService" : {
             "$ref" : "#/components/schemas/DatasetFieldServiceBean"
@@ -16226,14 +17577,8 @@
           "datasetVersionFilesServiceBean" : {
             "$ref" : "#/components/schemas/DatasetVersionFilesServiceBean"
           },
-          "rootDataverseName" : {
-            "type" : "string"
-          },
           "rootDataverseCached" : {
             "$ref" : "#/components/schemas/Dataverse"
-          },
-          "solrServer" : {
-            "type" : "object"
           },
           "variableMetadataUtil" : {
             "$ref" : "#/components/schemas/VariableMetadataUtil"
@@ -16431,6 +17776,18 @@
             "format" : "int64",
             "type" : "integer"
           },
+          "rightsIdentifier" : {
+            "type" : "string"
+          },
+          "rightsIdentifierScheme" : {
+            "type" : "string"
+          },
+          "schemeUri" : {
+            "type" : "string"
+          },
+          "languageCode" : {
+            "type" : "string"
+          },
           "termsOfUseAndAccess" : {
             "type" : "array",
             "items" : {
@@ -16439,6 +17796,20 @@
           },
           "default" : {
             "type" : "boolean"
+          }
+        }
+      },
+      "LicenseServiceBean" : {
+        "type" : "object",
+        "properties" : {
+          "em" : {
+            "type" : "object"
+          },
+          "actionLogSvc" : {
+            "$ref" : "#/components/schemas/ActionLogServiceBean"
+          },
+          "default" : {
+            "$ref" : "#/components/schemas/License"
           }
         }
       },
@@ -16618,6 +17989,9 @@
               "$ref" : "#/components/schemas/DatasetFieldType"
             }
           },
+          "localDisplayOnCreate" : {
+            "type" : "boolean"
+          },
           "owner" : {
             "$ref" : "#/components/schemas/Dataverse"
           },
@@ -16736,18 +18110,6 @@
           "userDeletionAllowed" : {
             "type" : "boolean"
           },
-          "persistentIdName" : {
-            "type" : "string"
-          },
-          "persistentIdDescription" : {
-            "type" : "string"
-          },
-          "persistentIdUrlPrefix" : {
-            "type" : "string"
-          },
-          "logo" : {
-            "type" : "string"
-          },
           "emailVerified" : {
             "type" : "boolean"
           },
@@ -16819,9 +18181,6 @@
           "verifierCache" : {
             "type" : "object"
           },
-          "displayIdentifier" : {
-            "type" : "boolean"
-          },
           "metadata" : {
             "type" : "object"
           },
@@ -16847,6 +18206,79 @@
           },
           "mimeType" : {
             "type" : "string"
+          }
+        }
+      },
+      "OrcidOAuth2AP" : {
+        "type" : "object",
+        "properties" : {
+          "passwordUpdateAllowed" : {
+            "type" : "boolean"
+          },
+          "userDeletionAllowed" : {
+            "type" : "boolean"
+          },
+          "emailVerified" : {
+            "type" : "boolean"
+          },
+          "friendlyName" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "subTitle" : {
+            "type" : "string"
+          },
+          "clientId" : {
+            "type" : "string"
+          },
+          "clientSecret" : {
+            "type" : "string"
+          },
+          "baseUserEndpoint" : {
+            "type" : "string"
+          },
+          "redirectUrl" : {
+            "type" : "string"
+          },
+          "scope" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "userInfoUpdateAllowed" : {
+            "type" : "boolean"
+          },
+          "order" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "iconHtml" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "spacedScope" : {
+            "type" : "string"
+          },
+          "oAuthProvider" : {
+            "type" : "boolean"
+          },
+          "apiInstance" : {
+            "type" : "object"
+          },
+          "info" : {
+            "$ref" : "#/components/schemas/AuthenticationProviderDisplayInfo"
+          },
+          "persistentIdUrlPrefix" : {
+            "type" : "string"
+          },
+          "production" : {
+            "type" : "boolean"
           }
         }
       },
@@ -16912,7 +18344,7 @@
         }
       },
       "Permission" : {
-        "enum" : [ "AddDataverse", "AddDataset", "ViewUnpublishedDataverse", "ViewUnpublishedDataset", "DownloadFile", "EditDataverse", "EditDataset", "ManageDataversePermissions", "ManageDatasetPermissions", "ManageFilePermissions", "PublishDataverse", "PublishDataset", "DeleteDataverse", "DeleteDatasetDraft" ],
+        "enum" : [ "AddDataverse", "AddDataset", "ViewUnpublishedDataverse", "ViewUnpublishedDataset", "DownloadFile", "EditDataverse", "EditDataset", "ManageDataversePermissions", "ManageDatasetPermissions", "ManageFilePermissions", "PublishDataverse", "PublishDataset", "LinkDataverse", "LinkDataset", "DeleteDataverse", "DeleteDatasetDraft" ],
         "type" : "string"
       },
       "PermissionServiceBean" : {
@@ -17242,7 +18674,7 @@
         "type" : "object",
         "properties" : {
           "searchService" : {
-            "$ref" : "#/components/schemas/SearchServiceBean"
+            "$ref" : "#/components/schemas/SearchServiceFactory"
           },
           "dvObjectService" : {
             "$ref" : "#/components/schemas/DvObjectServiceBean"
@@ -17297,41 +18729,49 @@
           },
           "settingsService" : {
             "$ref" : "#/components/schemas/SettingsServiceBean"
-          },
-          "roleAssigneeCache" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "$ref" : "#/components/schemas/RoleAssignee"
-            }
           }
         }
       },
-      "SearchServiceBean" : {
+      "SearchService" : {
         "type" : "object",
         "properties" : {
-          "dvObjectService" : {
-            "$ref" : "#/components/schemas/DvObjectServiceBean"
+          "serviceName" : {
+            "type" : "string"
           },
-          "datasetVersionService" : {
-            "$ref" : "#/components/schemas/DatasetVersionServiceBean"
+          "displayName" : {
+            "type" : "string"
           },
-          "datasetFieldService" : {
-            "$ref" : "#/components/schemas/DatasetFieldServiceBean"
+          "solrSearchService" : {
+            "$ref" : "#/components/schemas/SearchService"
+          }
+        }
+      },
+      "SearchServiceFactory" : {
+        "type" : "object",
+        "properties" : {
+          "beanManager" : {
+            "type" : "object"
           },
-          "groupService" : {
-            "$ref" : "#/components/schemas/GroupServiceBean"
+          "settingsService" : {
+            "$ref" : "#/components/schemas/SettingsServiceBean"
           },
-          "systemConfig" : {
-            "$ref" : "#/components/schemas/SystemConfig"
+          "solrSearchService" : {
+            "$ref" : "#/components/schemas/SearchService"
           },
-          "solrClientService" : {
-            "$ref" : "#/components/schemas/SolrClientService"
+          "serviceMap" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/SearchService"
+            }
           },
-          "permissionService" : {
-            "$ref" : "#/components/schemas/PermissionServiceBean"
+          "defaultSearchService" : {
+            "$ref" : "#/components/schemas/SearchService"
           },
-          "thumbnailServiceWrapper" : {
-            "$ref" : "#/components/schemas/ThumbnailServiceWrapper"
+          "availableServices" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/SearchService"
+            }
           }
         }
       },
@@ -17340,6 +18780,9 @@
         "properties" : {
           "em" : {
             "type" : "object"
+          },
+          "self" : {
+            "$ref" : "#/components/schemas/SettingsServiceBean"
           },
           "actionLogSvc" : {
             "$ref" : "#/components/schemas/ActionLogServiceBean"
@@ -17634,11 +19077,28 @@
           }
         }
       },
+      "SolrClientIndexService" : {
+        "type" : "object",
+        "properties" : {
+          "systemConfig" : {
+            "$ref" : "#/components/schemas/SystemConfig"
+          },
+          "solrUrl" : {
+            "type" : "string"
+          },
+          "solrClient" : {
+            "type" : "object"
+          }
+        }
+      },
       "SolrClientService" : {
         "type" : "object",
         "properties" : {
           "systemConfig" : {
             "$ref" : "#/components/schemas/SystemConfig"
+          },
+          "solrUrl" : {
+            "type" : "string"
           },
           "solrClient" : {
             "type" : "object"
@@ -17668,6 +19128,9 @@
       "SolrIndexServiceBean" : {
         "type" : "object",
         "properties" : {
+          "self" : {
+            "$ref" : "#/components/schemas/SolrIndexServiceBean"
+          },
           "dvObjectService" : {
             "$ref" : "#/components/schemas/DvObjectServiceBean"
           },
@@ -17680,18 +19143,17 @@
           "datasetService" : {
             "$ref" : "#/components/schemas/DatasetServiceBean"
           },
+          "datasetVersionService" : {
+            "$ref" : "#/components/schemas/DatasetVersionServiceBean"
+          },
           "rolesSvc" : {
             "$ref" : "#/components/schemas/DataverseRoleServiceBean"
           },
-          "indexService" : {
-            "$ref" : "#/components/schemas/IndexServiceBean"
-          },
           "solrClientService" : {
-            "$ref" : "#/components/schemas/SolrClientService"
+            "$ref" : "#/components/schemas/SolrClientIndexService"
           },
-          "unpublishedDataRelatedToMeModeEnabled" : {
-            "type" : "boolean",
-            "deprecated" : true
+          "em" : {
+            "type" : "object"
           }
         }
       },
@@ -17834,6 +19296,9 @@
           },
           "belowIngestSizeLimit" : {
             "type" : "boolean"
+          },
+          "dataverseAccessible" : {
+            "type" : "boolean"
           }
         }
       },
@@ -17874,6 +19339,29 @@
         "properties" : {
           "em" : {
             "type" : "object"
+          }
+        }
+      },
+      "SummaryNote" : {
+        "type" : "object",
+        "properties" : {
+          "dsfo" : {
+            "$ref" : "#/components/schemas/DatasetField"
+          },
+          "added" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "deleted" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "changed" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "datasetField" : {
+            "$ref" : "#/components/schemas/DatasetField"
           }
         }
       },
@@ -18032,6 +19520,13 @@
           "searchHighlightFragmentSize" : {
             "format" : "int32",
             "type" : "integer"
+          },
+          "tabularIngestSizeLimits" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "format" : "int64",
+              "type" : "integer"
+            }
           },
           "tabularIngestSizeLimit" : {
             "format" : "int64",
@@ -18195,6 +19690,10 @@
           },
           "rateLimitingDefaultCapacityTiers" : {
             "type" : "string"
+          },
+          "contactFeedbackMessageSizeLimit" : {
+            "format" : "int64",
+            "type" : "integer"
           }
         }
       },
@@ -18367,46 +19866,8 @@
           }
         }
       },
-      "ThumbnailServiceWrapper" : {
-        "type" : "object",
-        "properties" : {
-          "permissionService" : {
-            "$ref" : "#/components/schemas/PermissionServiceBean"
-          },
-          "dataverseService" : {
-            "$ref" : "#/components/schemas/DataverseServiceBean"
-          },
-          "datasetService" : {
-            "$ref" : "#/components/schemas/DatasetServiceBean"
-          },
-          "datasetVersionService" : {
-            "$ref" : "#/components/schemas/DatasetVersionServiceBean"
-          },
-          "dataFileService" : {
-            "$ref" : "#/components/schemas/DataFileServiceBean"
-          },
-          "dvobjectThumbnailsMap" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "type" : "string"
-            }
-          },
-          "dvobjectViewMap" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "$ref" : "#/components/schemas/DvObject"
-            }
-          },
-          "hasThumbMap" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "type" : "boolean"
-            }
-          }
-        }
-      },
       "Type" : {
-        "enum" : [ "ASSIGNROLE", "REVOKEROLE", "CREATEDV", "CREATEDS", "CREATEACC", "SUBMITTEDDS", "RETURNEDDS", "PUBLISHEDDS", "REQUESTFILEACCESS", "GRANTFILEACCESS", "REJECTFILEACCESS", "FILESYSTEMIMPORT", "CHECKSUMIMPORT", "CHECKSUMFAIL", "CONFIRMEMAIL", "APIGENERATED", "INGESTCOMPLETED", "INGESTCOMPLETEDWITHERRORS", "PUBLISHFAILED_PIDREG", "WORKFLOW_SUCCESS", "WORKFLOW_FAILURE", "STATUSUPDATED", "DATASETCREATED", "DATASETMENTIONED", "GLOBUSUPLOADCOMPLETED", "GLOBUSUPLOADCOMPLETEDWITHERRORS", "GLOBUSDOWNLOADCOMPLETED", "GLOBUSDOWNLOADCOMPLETEDWITHERRORS", "REQUESTEDFILEACCESS", "GLOBUSUPLOADREMOTEFAILURE", "GLOBUSUPLOADLOCALFAILURE" ],
+        "enum" : [ "ASSIGNROLE", "REVOKEROLE", "CREATEDV", "CREATEDS", "CREATEACC", "SUBMITTEDDS", "RETURNEDDS", "PUBLISHEDDS", "REQUESTFILEACCESS", "GRANTFILEACCESS", "REJECTFILEACCESS", "FILESYSTEMIMPORT", "CHECKSUMIMPORT", "CHECKSUMFAIL", "CONFIRMEMAIL", "APIGENERATED", "INGESTCOMPLETED", "INGESTCOMPLETEDWITHERRORS", "PUBLISHFAILED_PIDREG", "WORKFLOW_SUCCESS", "WORKFLOW_FAILURE", "STATUSUPDATED", "DATASETCREATED", "DATASETMENTIONED", "GLOBUSUPLOADCOMPLETED", "GLOBUSUPLOADCOMPLETEDWITHERRORS", "GLOBUSDOWNLOADCOMPLETED", "GLOBUSDOWNLOADCOMPLETEDWITHERRORS", "REQUESTEDFILEACCESS", "GLOBUSUPLOADREMOTEFAILURE", "GLOBUSUPLOADLOCALFAILURE", "PIDRECONCILED" ],
         "type" : "string"
       },
       "Type1" : {

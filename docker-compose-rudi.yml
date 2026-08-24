@@ -107,7 +107,7 @@ services:
       - ./config/strukture:/etc/rudi/config/
       - ./data/strukture:/opt/rudi/data/
     environment:
-      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF -Dbase_dn=${base_dn}
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF --add-opens java.base/java.util=ALL-UNNAMED -Dbase_dn=${base_dn}
     profiles:
       - portail
 
@@ -178,7 +178,7 @@ services:
       - ./data/projekt:/opt/rudi/data/
       - /var/log/rudi/projekt:/var/log/rudi/projekt
     environment:
-      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF -Dbase_dn=${base_dn}
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF --add-opens java.base/java.util=ALL-UNNAMED -Dbase_dn=${base_dn}
     profiles:
       - portail
 
@@ -195,7 +195,7 @@ services:
       - ./config/selfdata:/etc/rudi/config/
       - ./data/selfdata:/opt/rudi/data/
     environment:
-      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF -Dbase_dn=${base_dn}
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF --add-opens java.base/java.util=ALL-UNNAMED -Dbase_dn=${base_dn}
     profiles:
       - portail
 
