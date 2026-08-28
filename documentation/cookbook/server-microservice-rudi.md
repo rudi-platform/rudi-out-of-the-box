@@ -51,7 +51,7 @@ spring.datasource.url=jdbc:postgresql://<ip_ou_hostname_*ROOB_RUDI*>:5432/rudi
 Démarrer les services :
 
 ```bash
-docker compose -f .\docker-compose-rudi.yml -f .\docker-compose-network.yml up -d
+docker compose -f ./docker-compose-rudi.yml -f ./docker-compose-network.yml up -d
 ```
 
 ## Modifier la configuration des autres serveurs

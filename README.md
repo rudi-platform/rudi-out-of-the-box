@@ -60,10 +60,10 @@ Veuillez également consulter le document [Comment changer de host dans Magnolia
 Une seule commande pour tout démarrer :
 
 ```bash
-docker compose -f .\docker-compose-magnolia.yml \
-               -f .\docker-compose-rudi.yml \
-               -f .\docker-compose-dataverse.yml \
-               -f .\docker-compose-network.yml \
+docker compose -f ./docker-compose-magnolia.yml \
+               -f ./docker-compose-rudi.yml \
+               -f ./docker-compose-dataverse.yml \
+               -f ./docker-compose-network.yml \
                --profile "*" \
                up -d
 ```
@@ -86,10 +86,10 @@ Vous trouverez l'ensemble des identifiants et mots de passe préconfigurés dans
 Besoin de tout arrêter (avec conservation des données saisies) ?
 
 ```bash
-docker compose -f .\docker-compose-magnolia.yml \
-               -f .\docker-compose-rudi.yml \
-               -f .\docker-compose-dataverse.yml \
-               -f .\docker-compose-network.yml \
+docker compose -f ./docker-compose-magnolia.yml \
+               -f ./docker-compose-rudi.yml \
+               -f ./docker-compose-dataverse.yml \
+               -f ./docker-compose-network.yml \
                --profile "*" \
                stop
 ```
@@ -97,10 +97,10 @@ docker compose -f .\docker-compose-magnolia.yml \
 Besoin de tout arrêter (avec perte des données saisies) ?
 
 ```bash
-docker compose -f .\docker-compose-magnolia.yml \
-               -f .\docker-compose-rudi.yml \
-               -f .\docker-compose-dataverse.yml \
-               -f .\docker-compose-network.yml \
+docker compose -f ./docker-compose-magnolia.yml \
+               -f ./docker-compose-rudi.yml \
+               -f ./docker-compose-dataverse.yml \
+               -f ./docker-compose-network.yml \
                --profile "*" \
                down
 ```
@@ -108,10 +108,10 @@ docker compose -f .\docker-compose-magnolia.yml \
 Envie de tout reconstruire ?
 
 ```bash
-docker compose -f .\docker-compose-magnolia.yml \
-               -f .\docker-compose-rudi.yml \
-               -f .\docker-compose-dataverse.yml \
-               -f .\docker-compose-network.yml \
+docker compose -f ./docker-compose-magnolia.yml \
+               -f ./docker-compose-rudi.yml \
+               -f ./docker-compose-dataverse.yml \
+               -f ./docker-compose-network.yml \
                --profile "*" \
                up --build
 ```
@@ -119,10 +119,10 @@ docker compose -f .\docker-compose-magnolia.yml \
 Juste reconstruire les images ?
 
 ```bash
-docker compose -f .\docker-compose-magnolia.yml \
-               -f .\docker-compose-rudi.yml \
-               -f .\docker-compose-dataverse.yml \
-               -f .\docker-compose-network.yml \
+docker compose -f ./docker-compose-magnolia.yml \
+               -f ./docker-compose-rudi.yml \
+               -f ./docker-compose-dataverse.yml \
+               -f ./docker-compose-network.yml \
                --profile "*" \
                build
 ```

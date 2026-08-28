@@ -59,7 +59,7 @@ En complément, vous pouvez persister les données de la base de données en sui
 Démarrer les services :
 
 ```bash
-docker compose -f .\docker-compose-database.yml up -d
+docker compose -f ./docker-compose-database.yml up -d
 ```
 
 ## Modifier la configuration des services RUDI sur le serveur *ROOB_RUDI*
