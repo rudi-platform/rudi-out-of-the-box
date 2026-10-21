@@ -49,8 +49,8 @@ Cette section est configurable dans le fichier `config/konsult/customization.jso
 {
     ...
 	"heroDescription": {
-		"leftImage": "/assets/hero/left-image.png",
-		"rightImage": "/assets/hero/right-image.png",
+		"leftImage": "/assets/hero/left-image.svg",
+		"rightImage": "/assets/hero/right-image.svg",
 		"titles1": [
 			{
 				"locale": "fr_FR",
@@ -275,7 +275,7 @@ Cette section est configurable dans le fichier `config/konsult/customization.jso
 {
     ...
     "keyFiguresDescription": {
-		"keyFiguresLogo": "/assets/keyFigures/key-figures-logo.png",
+		"keyFiguresLogo": "/assets/keyFigures/key-figures-logo.svg",
 		"keyFigures": [
 			{
 				"type": "DATASET",
@@ -392,12 +392,16 @@ Les autres liens du footer sont configurés dans Magnolia et figurent dans la se
     ...
 	"cmsTermsDescription": {
 		"category": "/rudi/terms",
-		"cguCategory": "/rudi/terms/cgu",
-		"legalMentionCategory": "/rudi/terms/legal-mention",
-		"privacyPolicyCategory": "/rudi/terms/privacy-policy",
-		"copyrightsCategory": "/rudi/terms/copyrights",
 		"templateDetailed": "rudi-terms@one-term-detailed",
-		"templateSimple": "rudi-terms@one-term"
+		"templateSimple": "rudi-terms@one-term",
+		"cguCategory": "/rudi/terms/cgu",
+		"termsCategories": [
+			"/rudi/terms/cgu",
+			"/rudi/terms/legal-mention",
+			"/rudi/terms/privacy-policy",
+			"/rudi/terms/copyrights",
+			"/rudi/terms/faq"
+		]
 	},
     ...
 }
