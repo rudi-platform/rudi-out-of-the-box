@@ -178,6 +178,7 @@ En fonction des montées de version, des étapes supplémentaires peuvent être 
 | v3.3.8  | Pas d'opération spécifique                                                   | [Notes de version v3.3.8](https://github.com/rudi-platform/rudi-portal/releases/tag/v3.3.8)                                                        |
 | v3.3.9  | [Opération à effectuer pour la v3.3.9](./documentation/changelogs/v3.3.9.md) | [Notes de version v3.3.9](https://github.com/rudi-platform/rudi-portal/releases/tag/v3.3.9)                                                        |
 | v3.3.13  | [Opération à effectuer pour la v3.3.13](./documentation/changelogs/v3.3.13.md) | <pre><ul><li> [Notes de version v3.3.10](https://github.com/rudi-platform/rudi-portal/releases/tag/v3.3.10) </li><li> [Notes de version v3.3.12](https://github.com/rudi-platform/rudi-portal/releases/tag/v3.3.12) </li><li> [Notes de version v3.3.13](https://github.com/rudi-platform/rudi-portal/releases/tag/v3.3.13) </li></ul></pre>|
+| v3.4.3  | Pas d'opération spécifique                                                   | <pre><ul><li> [Notes de version v3.4.0](https://github.com/rudi-platform/rudi-portal/releases/tag/v3.4.0) </li><li> [Notes de version v3.4.1](https://github.com/rudi-platform/rudi-portal/releases/tag/v3.4.1) </li><li> [Notes de version v3.4.2](https://github.com/rudi-platform/rudi-portal/releases/tag/v3.4.2) </li><li> [Notes de version v3.4.3](https://github.com/rudi-platform/rudi-portal/releases/tag/v3.4.3) </li></ul></pre>|
 
 
 ## L'écosystème Rudi (les autres dépôts de code)
